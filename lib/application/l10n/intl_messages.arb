@@ -1,0 +1,24 @@
+{
+  "@@locale": "ru",
+  "@@last_modified": "2025-10-15T19:39:20.336438",
+  "applicationName": "Рабочее название",
+  "@applicationName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnAdd": "Добавить",
+  "@btnAdd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnCancel": "Отменить",
+  "@btnCancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnOk": "OK",
+  "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

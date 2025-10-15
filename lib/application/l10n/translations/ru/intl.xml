@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="applicationName">Спортаймер</string>
+  <string name="btnAdd">Добавить</string>
+  <string name="btnCancel">Отменить</string>
+  <string name="btnOk">OK</string>
+</resources>

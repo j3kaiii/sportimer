@@ -1,0 +1,3 @@
+# sportimer
+
+Timer for sport

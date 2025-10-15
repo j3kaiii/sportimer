@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="applicationName">Sportimer</string>
+  <string name="btnAdd">Add</string>
+  <string name="btnCancel">Cancel</string>
+  <string name="btnOk">OK</string>
+</resources>
