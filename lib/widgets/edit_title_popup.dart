@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportimer/utils/context_extension.dart';
 
 class EditTitlePopup extends StatefulWidget {
   final String title;
@@ -20,9 +21,10 @@ class _EditTitlePopupState extends State<EditTitlePopup> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: Text('Изменить название'),
+      title: Text(loc.changeTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,7 +45,7 @@ class _EditTitlePopupState extends State<EditTitlePopup> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Отмена'),
+          child: Text(loc.btnCancel),
         ),
         TextButton(
           onPressed: () {
@@ -52,7 +54,7 @@ class _EditTitlePopupState extends State<EditTitlePopup> {
               Navigator.of(context).pop(text);
             }
           },
-          child: Text('Сохранить'),
+          child: Text(loc.btnSave),
         )
       ],
     );

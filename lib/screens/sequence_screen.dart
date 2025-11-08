@@ -48,11 +48,12 @@ class _SequenceScreenState extends State<SequenceScreen> {
               icon: Icon(Icons.edit))
         ],
         floatingButton: FloatingActionButton.extended(
-            onPressed: () => context.goNamed(
-                  runSequenceName,
-                  extra: widget.sequence,
-                ),
-            label: Text('Старт')),
+          onPressed: () => context.goNamed(
+            runSequenceName,
+            extra: widget.sequence,
+          ),
+          label: Text(context.loc.btnStart),
+        ),
         child: SequenceContent(sequence: widget.sequence));
   }
 

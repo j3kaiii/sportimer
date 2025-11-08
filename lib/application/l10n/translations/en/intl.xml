@@ -4,4 +4,16 @@
   <string name="btnAdd">Add</string>
   <string name="btnCancel">Cancel</string>
   <string name="btnOk">OK</string>
+  <string name="btnStart">Start</string>
+  <string name="btnPause">Pause</string>
+  <string name="btnResume">Continue</string>
+  <string name="btnReset">Reset</string>
+  <string name="btnSave">Save</string>
+  <string name="timerListTitle">Timers</string>
+  <string name="changeTitle">Change name</string>
+  <string name="setTimerTitle">Set timer</string>
+  <string name="setTime">Set</string>
+  <string name="orderedName">Sequence {index}</string>
+  <string name="timerByOrder">Timer {current} of {total}</string>
+  <string name="completedMsg">Completed!</string>
 </resources>

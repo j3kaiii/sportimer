@@ -14,35 +14,56 @@ import 'package:intl/message_lookup_by_library.dart';
 
 final messages = MessageLookup();
 
-typedef String? MessageIfAbsent(String? messageStr, List<Object>? args);
+typedef String? MessageIfAbsent(
+    String? messageStr, List<Object>? args);
 
 class MessageLookup extends MessageLookupByLibrary {
   @override
   String get localeName => 'en';
 
-  String? lookupMessage(String? messageText, String? locale, String? name,
-      List<Object>? args, String? meaning,
+  String? lookupMessage(
+      String? message_str,
+      String? locale,
+      String? name,
+      List<Object>? args,
+      String? meaning,
       {MessageIfAbsent? ifAbsent}) {
-    String? failedLookup(String? messageStr, List<Object>? args) {
+    String? failedLookup(
+        String? message_str, List<Object>? args) {
       // If there's no message_str, then we are an internal lookup, e.g. an
       // embedded plural, and shouldn't fail.
-      if (messageStr == null) return null;
-      throw UnsupportedError("No translation found for message '$name',\n"
-          "  original text '$messageStr'");
+      if (message_str == null) return null;
+      throw UnsupportedError(
+          "No translation found for message '$name',\n"
+          "  original text '$message_str'");
     }
-
-    return super.lookupMessage(messageText, locale, name, args, meaning,
+    return super.lookupMessage(message_str, locale, name, args, meaning,
         ifAbsent: ifAbsent ?? failedLookup);
   }
 
+  static m0(index) => "Sequence ${index}";
+
+  static m1(current, total) => "Timer ${current} of ${total}";
+
   @override
-  final Map<String, dynamic> messages =
-      _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-        'applicationName': MessageLookupByLibrary.simpleMessage('Sportimer'),
-        'btnAdd': MessageLookupByLibrary.simpleMessage('Add'),
-        'btnCancel': MessageLookupByLibrary.simpleMessage('Cancel'),
-        'btnOk': MessageLookupByLibrary.simpleMessage('OK')
-      };
+      'applicationName': MessageLookupByLibrary.simpleMessage('Sportimer'),
+    'btnAdd': MessageLookupByLibrary.simpleMessage('Add'),
+    'btnCancel': MessageLookupByLibrary.simpleMessage('Cancel'),
+    'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
+    'btnPause': MessageLookupByLibrary.simpleMessage('Pause'),
+    'btnReset': MessageLookupByLibrary.simpleMessage('Reset'),
+    'btnResume': MessageLookupByLibrary.simpleMessage('Continue'),
+    'btnSave': MessageLookupByLibrary.simpleMessage('Save'),
+    'btnStart': MessageLookupByLibrary.simpleMessage('Start'),
+    'changeTitle': MessageLookupByLibrary.simpleMessage('Change name'),
+    'completedMsg': MessageLookupByLibrary.simpleMessage('Completed!'),
+    'orderedName': m0,
+    'setTime': MessageLookupByLibrary.simpleMessage('Set'),
+    'setTimerTitle': MessageLookupByLibrary.simpleMessage('Set timer'),
+    'timerByOrder': m1,
+    'timerListTitle': MessageLookupByLibrary.simpleMessage('Timers')
+  };
 }

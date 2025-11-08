@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2025-10-15T19:41:24.765304",
+  "@@last_modified": "2025-11-09T01:39:23.116486",
   "applicationName": "Sportimer",
   "@applicationName": {
     "type": "text",
@@ -18,6 +18,71 @@
   },
   "btnOk": "OK",
   "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnStart": "Start",
+  "@btnStart": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnPause": "Pause",
+  "@btnPause": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnResume": "Continue",
+  "@btnResume": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnReset": "Reset",
+  "@btnReset": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnSave": "Save",
+  "@btnSave": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "timerListTitle": "Timers",
+  "@timerListTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "changeTitle": "Change name",
+  "@changeTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "setTimerTitle": "Set timer",
+  "@setTimerTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "setTime": "Set",
+  "@setTime": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "orderedName": "Sequence {index}",
+  "@orderedName": {
+    "type": "text",
+    "placeholders": {
+      "index": {}
+    }
+  },
+  "timerByOrder": "Timer {current} of {total}",
+  "@timerByOrder": {
+    "type": "text",
+    "placeholders": {
+      "current": {},
+      "total": {}
+    }
+  },
+  "completedMsg": "Completed!",
+  "@completedMsg": {
     "type": "text",
     "placeholders": {}
   }

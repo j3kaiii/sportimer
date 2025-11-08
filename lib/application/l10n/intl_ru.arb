@@ -1,7 +1,7 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2025-10-15T19:39:20.336438",
-  "applicationName": "Рабочее название",
+  "@@last_modified": "2025-11-09T01:36:53.655165",
+  "applicationName": "Спортаймер",
   "@applicationName": {
     "type": "text",
     "placeholders": {}
@@ -18,6 +18,71 @@
   },
   "btnOk": "OK",
   "@btnOk": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnStart": "Старт",
+  "@btnStart": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnPause": "Пауза",
+  "@btnPause": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnResume": "Продолжить",
+  "@btnResume": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnReset": "Сбросить",
+  "@btnReset": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnSave": "Сохранить",
+  "@btnSave": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "timerListTitle": "Таймеры",
+  "@timerListTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "changeTitle": "Изменить название",
+  "@changeTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "setTimerTitle": "Установка таймера",
+  "@setTimerTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "setTime": "Установить",
+  "@setTime": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "orderedName": "Набор {index}",
+  "@orderedName": {
+    "type": "text",
+    "placeholders": {
+      "index": {}
+    }
+  },
+  "timerByOrder": "Таймер {current} из {total}",
+  "@timerByOrder": {
+    "type": "text",
+    "placeholders": {
+      "current": {},
+      "total": {}
+    }
+  },
+  "completedMsg": "Завершено!",
+  "@completedMsg": {
     "type": "text",
     "placeholders": {}
   }

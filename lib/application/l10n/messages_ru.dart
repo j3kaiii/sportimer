@@ -14,36 +14,56 @@ import 'package:intl/message_lookup_by_library.dart';
 
 final messages = MessageLookup();
 
-typedef String? MessageIfAbsent(String? messageStr, List<Object>? args);
+typedef String? MessageIfAbsent(
+    String? messageStr, List<Object>? args);
 
 class MessageLookup extends MessageLookupByLibrary {
   @override
   String get localeName => 'ru';
 
-  String? lookupMessage(String? messageText, String? locale, String? name,
-      List<Object>? args, String? meaning,
+  String? lookupMessage(
+      String? message_str,
+      String? locale,
+      String? name,
+      List<Object>? args,
+      String? meaning,
       {MessageIfAbsent? ifAbsent}) {
-    String? failedLookup(String? messageStr, List<Object>? args) {
+    String? failedLookup(
+        String? message_str, List<Object>? args) {
       // If there's no message_str, then we are an internal lookup, e.g. an
       // embedded plural, and shouldn't fail.
-      if (messageStr == null) return null;
-      throw UnsupportedError("No translation found for message '$name',\n"
-          "  original text '$messageStr'");
+      if (message_str == null) return null;
+      throw UnsupportedError(
+          "No translation found for message '$name',\n"
+          "  original text '$message_str'");
     }
-
-    return super.lookupMessage(messageText, locale, name, args, meaning,
+    return super.lookupMessage(message_str, locale, name, args, meaning,
         ifAbsent: ifAbsent ?? failedLookup);
   }
 
+  static m0(index) => "Набор ${index}";
+
+  static m1(current, total) => "Таймер ${current} из ${total}";
+
   @override
-  final Map<String, dynamic> messages =
-      _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-        'applicationName':
-            MessageLookupByLibrary.simpleMessage('Рабочее название'),
-        'btnAdd': MessageLookupByLibrary.simpleMessage('Добавить'),
-        'btnCancel': MessageLookupByLibrary.simpleMessage('Отменить'),
-        'btnOk': MessageLookupByLibrary.simpleMessage('OK')
-      };
+      'applicationName': MessageLookupByLibrary.simpleMessage('Спортаймер'),
+    'btnAdd': MessageLookupByLibrary.simpleMessage('Добавить'),
+    'btnCancel': MessageLookupByLibrary.simpleMessage('Отменить'),
+    'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
+    'btnPause': MessageLookupByLibrary.simpleMessage('Пауза'),
+    'btnReset': MessageLookupByLibrary.simpleMessage('Сбросить'),
+    'btnResume': MessageLookupByLibrary.simpleMessage('Продолжить'),
+    'btnSave': MessageLookupByLibrary.simpleMessage('Сохранить'),
+    'btnStart': MessageLookupByLibrary.simpleMessage('Старт'),
+    'changeTitle': MessageLookupByLibrary.simpleMessage('Изменить название'),
+    'completedMsg': MessageLookupByLibrary.simpleMessage('Завершено!'),
+    'orderedName': m0,
+    'setTime': MessageLookupByLibrary.simpleMessage('Установить'),
+    'setTimerTitle': MessageLookupByLibrary.simpleMessage('Установка таймера'),
+    'timerByOrder': m1,
+    'timerListTitle': MessageLookupByLibrary.simpleMessage('Таймеры')
+  };
 }

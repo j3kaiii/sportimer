@@ -40,7 +40,7 @@ class _ListsScreenState extends State<ListsScreen> {
   Widget build(BuildContext context) {
     final loc = context.loc;
     return CommonContentScreen(
-      title: 'Таймеры',
+      title: loc.timerListTitle,
       // actions: [
       //   IconButton(
       //       onPressed: () {
@@ -51,7 +51,8 @@ class _ListsScreenState extends State<ListsScreen> {
       floatingButton: FloatingActionButton(
         onPressed: () async {
           final next = _sequenceBox.length + 1;
-          final sequence = Sequence(const UuidV4().generate(), 'Набор $next');
+          final sequence =
+              Sequence(const UuidV4().generate(), loc.orderedName(next));
           await _sequenceBox.put(sequence.id, sequence);
           if (context.mounted) {
             context.goNamed(sequenceName, extra: sequence);

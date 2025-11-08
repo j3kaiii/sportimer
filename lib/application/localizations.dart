@@ -22,10 +22,35 @@ class AppLocalizations {
   AppLocalizations(this.locale);
 
   String get applicationName =>
-      Intl.message('Рабочее название', name: 'applicationName');
+      Intl.message('Спортаймер', name: 'applicationName');
   String get btnAdd => Intl.message('Добавить', name: 'btnAdd');
   String get btnCancel => Intl.message('Отменить', name: 'btnCancel');
   String get btnOk => Intl.message('OK', name: 'btnOk');
+  String get btnStart => Intl.message('Старт', name: 'btnStart');
+  String get btnPause => Intl.message('Пауза', name: 'btnPause');
+  String get btnResume => Intl.message('Продолжить', name: 'btnResume');
+  String get btnReset => Intl.message('Сбросить', name: 'btnReset');
+  String get btnSave => Intl.message('Сохранить', name: 'btnSave');
+  String get timerListTitle => Intl.message('Таймеры', name: 'timerListTitle');
+  String get changeTitle =>
+      Intl.message('Изменить название', name: 'changeTitle');
+  String get setTimerTitle =>
+      Intl.message('Установка таймера', name: 'setTimerTitle');
+  String get setTime => Intl.message('Установить', name: 'setTime');
+
+  String orderedName(int index) => Intl.message(
+        'Набор $index',
+        name: 'orderedName',
+        args: [index],
+      );
+
+  String timerByOrder(int current, int total) => Intl.message(
+        'Таймер $current из $total',
+        name: 'timerByOrder',
+        args: [current, total],
+      );
+
+  String get completedMsg => Intl.message('Завершено!', name: 'completedMsg');
 }
 
 class DefLocalizationsDelegate<T> extends LocalizationsDelegate<T> {

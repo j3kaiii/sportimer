@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sportimer/application/consts.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
+import 'package:sportimer/utils/context_extension.dart';
 import 'package:wheel_chooser/wheel_chooser.dart';
 
 class TimerPopup extends StatefulWidget {
@@ -41,6 +43,7 @@ class _TimerPopupState extends State<TimerPopup> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -49,7 +52,7 @@ class _TimerPopupState extends State<TimerPopup> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Set Timer Duration',
+              loc.setTimerTitle,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -66,7 +69,7 @@ class _TimerPopupState extends State<TimerPopup> {
                   }),
                 ),
                 const Text(
-                  ':',
+                  delimeter,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 _buildSpiner(
@@ -107,7 +110,7 @@ class _TimerPopupState extends State<TimerPopup> {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: _cancelSelection,
-                    child: const Text('Cancel'),
+                    child: Text(loc.btnCancel),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -118,7 +121,7 @@ class _TimerPopupState extends State<TimerPopup> {
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Set Timer'),
+                    child: Text(loc.setTime),
                   ),
                 ),
               ],

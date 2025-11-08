@@ -12,3 +12,6 @@ const sequencePath = sequenceName;
 
 const runSequenceName = 'run_sequence';
 const runSequencePath = runSequenceName;
+
+//
+const delimeter = ':';

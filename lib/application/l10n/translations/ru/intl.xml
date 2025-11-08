@@ -4,4 +4,16 @@
   <string name="btnAdd">Добавить</string>
   <string name="btnCancel">Отменить</string>
   <string name="btnOk">OK</string>
+  <string name="btnStart">Старт</string>
+  <string name="btnPause">Пауза</string>
+  <string name="btnResume">Продолжить</string>
+  <string name="btnReset">Сбросить</string>
+  <string name="btnSave">Сохранить</string>
+  <string name="timerListTitle">Таймеры</string>
+  <string name="changeTitle">Изменить название</string>
+  <string name="setTimerTitle">Установка таймера</string>
+  <string name="setTime">Установить</string>
+  <string name="orderedName">Набор {index}</string>
+  <string name="timerByOrder">Таймер {current} из {total}</string>
+  <string name="completedMsg">Завершено!</string>
 </resources>

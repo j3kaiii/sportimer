@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:sportimer/application/consts.dart';
+import 'package:sportimer/application/localizations.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
 import 'package:sportimer/models/timer_sequence/sequence.dart';
+import 'package:sportimer/utils/context_extension.dart';
 
 class RuningSequenceScreen extends StatefulWidget {
   final Sequence sequence;
@@ -90,7 +92,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     return Column(
       children: [
         _buildTimer(context),
-        _buildControls(context),
+        _buildControls(context, context.loc),
       ],
     );
   }
@@ -107,7 +109,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
               child: Row(
                 children: [
                   _buildMinutes(context),
-                  Text(':', style: _style),
+                  Text(delimeter, style: _style),
                   _buildSeconds(context),
                 ],
               )),
@@ -136,26 +138,28 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     );
   }
 
-  Widget _buildControls(BuildContext context) {
+  Widget _buildControls(BuildContext context, AppLocalizations loc) {
     return Padding(
       padding: EdgeInsets.all(20),
-      child: _isLandscape ? _buildLandscape(context) : _buildPortrait(context),
+      child: _isLandscape
+          ? _buildLandscape(context, loc)
+          : _buildPortrait(context, loc),
     );
   }
 
-  Widget _buildPortrait(BuildContext context) {
+  Widget _buildPortrait(BuildContext context, AppLocalizations loc) {
     return Column(
       children: [
         Text(
-          'Таймер ${_currentTimerIndex + 1} из ${_timers.length}',
+          _timerByOrder(loc),
           style: const TextStyle(fontSize: 18, color: Colors.grey),
         ),
         const SizedBox(height: 30),
-        _buildControlButtons(),
+        _buildControlButtons(context, loc),
         const SizedBox(height: 20),
         if (_isCompleted)
-          const Text(
-            'Последовательность завершена!',
+          Text(
+            loc.completedMsg,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -166,20 +170,20 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     );
   }
 
-  Widget _buildLandscape(BuildContext context) {
+  Widget _buildLandscape(BuildContext context, AppLocalizations loc) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Таймер ${_currentTimerIndex + 1} из ${_timers.length}',
+          _timerByOrder(loc),
           style: const TextStyle(fontSize: 18, color: Colors.grey),
         ),
-        _buildControlButtons(),
+        _buildControlButtons(context, loc),
         if (_isCompleted)
-          const Expanded(
+          Expanded(
             child: Text(
-              'Завершено!',
+              loc.completedMsg,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -192,7 +196,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     );
   }
 
-  Widget _buildControlButtons() {
+  Widget _buildControlButtons(BuildContext context, AppLocalizations loc) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -205,7 +209,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
             child: _soundsLoaded
-                ? const Text('Старт')
+                ? Text(loc.btnStart)
                 : const SizedBox(
                     width: 20,
                     height: 20,
@@ -220,7 +224,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
-            child: const Text('Пауза'),
+            child: Text(loc.btnPause),
           ),
         if (!_isRunning && _currentTimerIndex > 0 && !_isCompleted)
           ElevatedButton(
@@ -230,7 +234,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
-            child: const Text('Продолжить'),
+            child: Text(loc.btnResume),
           ),
         if (_currentTimerIndex > 0 || _isCompleted) const SizedBox(width: 20),
         if (_currentTimerIndex > 0 || _isCompleted)
@@ -241,7 +245,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
-            child: const Text('Сброс'),
+            child: Text(loc.btnReset),
           ),
       ],
     );
@@ -302,7 +306,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
       _shortBeepPlayer.seek(Duration.zero);
       _shortBeepPlayer.play();
     } catch (e) {
-      print('Ошибка short beep: $e');
+      // не найден звук, продолжаем работать
     }
   }
 
@@ -311,7 +315,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
       _longBeepPlayer.seek(Duration.zero);
       _longBeepPlayer.play();
     } catch (e) {
-      print('Ошибка short beep: $e');
+      // не найден звук, продолжаем работать
     }
   }
 
@@ -359,4 +363,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
       _isCompleted = false;
     });
   }
+
+  String _timerByOrder(AppLocalizations loc) =>
+      loc.timerByOrder(_currentTimerIndex + 1, _timers.length);
 }
