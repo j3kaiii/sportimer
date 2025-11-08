@@ -9,38 +9,21 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const image = 'assets/images/image.png';
+    const image = 'assets/images/timer.png';
     final theme = context.theme;
-    return Material(
-      color: theme.primaryBgColor,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              height: 300,
-              width: 300,
-              decoration: BoxDecoration(
-                color: theme.secondaryBgColor,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Image.asset(image),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => context.goNamed(root),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'loading',
-                  style: TextStyle(fontSize: 26, color: theme.primaryBgColor),
-                ),
-              ),
-            )
-          ],
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        if (context.mounted) {
+          context.goNamed(root);
+        }
+      });
+    });
+    return GestureDetector(
+      onTap: () => context.goNamed(root),
+      child: Material(
+        color: theme.primaryBgColor,
+        child: Center(
+          child: Image.asset(image),
         ),
       ),
     );

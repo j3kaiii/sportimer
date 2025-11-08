@@ -5,11 +5,16 @@ class CommonContentScreen extends StatelessWidget {
   final String title;
   final List<Widget>? actions;
   final Widget child;
+  final Widget? floatingButton;
+  final FloatingActionButtonLocation floatingButtonLocation;
+
   const CommonContentScreen({
     super.key,
     required this.title,
     required this.child,
     this.actions,
+    this.floatingButton,
+    this.floatingButtonLocation = FloatingActionButtonLocation.centerFloat,
   });
 
   @override
@@ -22,6 +27,8 @@ class CommonContentScreen extends StatelessWidget {
         actions: actions,
       ),
       body: child,
+      floatingActionButton: floatingButton,
+      floatingActionButtonLocation: floatingButtonLocation,
     );
   }
 }

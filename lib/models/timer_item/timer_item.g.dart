@@ -19,17 +19,23 @@ class TimerItemAdapter extends TypeAdapter<TimerItem> {
     return TimerItem(
       id: fields[0] as String,
       seconds: fields[1] as int,
+      position: fields[2] as int,
+      sequenceId: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, TimerItem obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.seconds);
+      ..write(obj.seconds)
+      ..writeByte(2)
+      ..write(obj.position)
+      ..writeByte(3)
+      ..write(obj.sequenceId);
   }
 
   @override

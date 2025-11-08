@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:uuid/v4.dart';
 
 part 'sequence.g.dart';
 
@@ -8,7 +7,12 @@ class Sequence extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  final String name;
+  String name;
 
-  Sequence(this.name) : id = const UuidV4().generate();
+  Sequence(this.id, this.name);
+
+  Sequence copyWith(String updated) => Sequence(id, updated);
+
+  @override
+  String toString() => 'Sequence id: $id, name: $name,';
 }

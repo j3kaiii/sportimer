@@ -1,3 +1,3 @@
-import 'package:shopping_list_example/application/app.dart';
+import 'package:sportimer/application/app.dart';
 
 void main() => runWithHive();

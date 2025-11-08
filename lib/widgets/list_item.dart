@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Элемент списка созданных сиквенсов.
+///
+/// Каждый сиквенс представляет собой набор таймеров,
+/// настройки цвета фона и звука.
 class ListItem extends StatelessWidget {
   final String name;
   final Color? color;
@@ -18,9 +22,16 @@ class ListItem extends StatelessWidget {
       onTap: onTap,
       child: Card.outlined(
         color: color,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(name),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.alarm_on_rounded,
+              size: 60,
+            ),
+            Text(name),
+          ],
         ),
       ),
     );
