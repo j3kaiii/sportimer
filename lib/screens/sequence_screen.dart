@@ -47,12 +47,14 @@ class _SequenceScreenState extends State<SequenceScreen> {
               onPressed: () => showEditTilePopup(context),
               icon: Icon(Icons.edit))
         ],
-        floatingButton: FloatingActionButton.extended(
+        floatingButton: ElevatedButton(
           onPressed: () => context.goNamed(
             runSequenceName,
             extra: widget.sequence,
           ),
-          label: Text(context.loc.btnStart),
+          style: context.theme.buttonStyle,
+          child:
+              Text(context.loc.btnStart, style: context.theme.buttonTextStyle),
         ),
         child: SequenceContent(sequence: widget.sequence));
   }

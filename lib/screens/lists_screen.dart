@@ -41,14 +41,7 @@ class _ListsScreenState extends State<ListsScreen> {
     final loc = context.loc;
     return CommonContentScreen(
       title: loc.timerListTitle,
-      // actions: [
-      //   IconButton(
-      //       onPressed: () {
-      //         print('testdata pressed settings');
-      //       },
-      //       icon: Icon(Icons.settings))
-      // ],
-      floatingButton: FloatingActionButton(
+      floatingButton: ElevatedButton(
         onPressed: () async {
           final next = _sequenceBox.length + 1;
           final sequence =
@@ -58,12 +51,13 @@ class _ListsScreenState extends State<ListsScreen> {
             context.goNamed(sequenceName, extra: sequence);
           }
         },
-        child: Icon(
-          Icons.add_alarm,
-          size: 40,
+        style: context.theme.buttonStyle,
+        child: Text(
+          loc.btnAdd.toUpperCase(),
+          style: context.theme.buttonTextStyle,
         ),
       ),
-      floatingButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingButtonLocation: FloatingActionButtonLocation.centerFloat,
       child: _buildList(context, loc),
     );
   }

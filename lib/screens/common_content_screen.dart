@@ -21,7 +21,10 @@ class CommonContentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: context.theme.titleTextStyle,
+        ),
         centerTitle: true,
         backgroundColor: context.theme.secondaryBgColor,
         actions: actions,
