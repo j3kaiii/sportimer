@@ -14,6 +14,7 @@ class TimerPopup extends StatefulWidget {
 class _TimerPopupState extends State<TimerPopup> {
   int minutes = 0;
   int seconds = 0;
+  bool _isRest = false;
   final FixedExtentScrollController _minutesController =
       FixedExtentScrollController();
   final FixedExtentScrollController _secondsController =
@@ -44,10 +45,11 @@ class _TimerPopupState extends State<TimerPopup> {
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
+    const spacer = SizedBox(height: 18);
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(18),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -57,6 +59,7 @@ class _TimerPopupState extends State<TimerPopup> {
                     fontWeight: FontWeight.bold,
                   ),
             ),
+            spacer,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +85,7 @@ class _TimerPopupState extends State<TimerPopup> {
               ],
             ),
 
-            const SizedBox(height: 10),
+            spacer,
 
             // Preview of selected time
             Container(
@@ -101,7 +104,7 @@ class _TimerPopupState extends State<TimerPopup> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            spacer,
 
             // Action buttons
             Row(
@@ -126,6 +129,19 @@ class _TimerPopupState extends State<TimerPopup> {
                 ),
               ],
             ),
+            spacer,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(context.loc.isRestTitle),
+                Switch(
+                  value: _isRest,
+                  onChanged: (_) => setState(() {
+                    _isRest = !_isRest;
+                  }),
+                ),
+              ],
+            )
           ],
         ),
       ),
@@ -139,13 +155,15 @@ class _TimerPopupState extends State<TimerPopup> {
   ) {
     return SizedBox(
       width: 100,
-      height: 200,
+      height: 150,
       child: WheelChooser<int>(
         onValueChanged: onChange,
         datas: List.generate(60, (index) => index.toString().padLeft(2, '0')),
         isInfinite: true,
         controller: controller,
         startPosition: null,
+        selectTextStyle: context.theme.titleTextStyle,
+        unSelectTextStyle: context.theme.defaultTextStyle,
       ),
     );
   }
