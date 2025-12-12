@@ -17,16 +17,39 @@ class SpotimerTheme {
 }
 
 class SportimerThemeData extends CustomThemeData {
-  const SportimerThemeData({
+  final TextStyle defaultTextStyle;
+  final TextStyle titleTextStyle;
+  final TextStyle buttonTextStyle;
+  final ButtonStyle buttonStyle;
+  SportimerThemeData({
     this.coloredBackground,
     this.activeItemColor,
     this.primaryBgColor,
     this.secondaryBgColor,
-  });
+  })  : buttonStyle = ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(Colors.amberAccent),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
+          ),
+          shadowColor: WidgetStateProperty.all(Colors.black26),
+          side: WidgetStateProperty.all(
+              BorderSide(width: 2.0, color: Colors.black87)),
+          padding: WidgetStateProperty.all(
+              EdgeInsets.symmetric(horizontal: 60, vertical: 12)),
+        ),
+        defaultTextStyle = TextStyle(fontSize: 20),
+        titleTextStyle = TextStyle(fontSize: 28),
+        buttonTextStyle = TextStyle(
+          fontSize: 22,
+          color: Colors.black87,
+          fontWeight: FontWeight.bold,
+        );
 
   static SportimerThemeData of(BuildContext context) => CustomThemes.safeOf(
         context,
-        mainDefault: const SportimerThemeData(),
+        mainDefault: SportimerThemeData(),
       );
 
   // Цвет фона шторки
