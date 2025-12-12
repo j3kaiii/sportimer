@@ -16,4 +16,5 @@
   <string name="orderedName">Набор {index}</string>
   <string name="timerByOrder">Таймер {current} из {total}</string>
   <string name="completedMsg">Завершено!</string>
+  <string name="isRestTitle">Отдых</string>
 </resources>

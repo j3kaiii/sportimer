@@ -16,4 +16,5 @@
   <string name="orderedName">Sequence {index}</string>
   <string name="timerByOrder">Timer {current} of {total}</string>
   <string name="completedMsg">Completed!</string>
+  <string name="isRestTitle">Relax</string>
 </resources>
