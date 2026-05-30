@@ -30,8 +30,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
   bool _isRunning = false;
   bool _isCompleted = false;
 
-  final AudioPlayer _shortBeepPlayer = AudioPlayer();
-  final AudioPlayer _longBeepPlayer = AudioPlayer();
+  final AudioPlayer _countdownPlayer = AudioPlayer();
   bool _soundsLoaded = false;
   final ValueNotifier<int> _minutes = ValueNotifier<int>(0);
   final ValueNotifier<int> _seconds = ValueNotifier<int>(0);
@@ -47,18 +46,13 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
   void initState() {
     super.initState();
     _loadTimers();
-    _initializeAudio();
   }
 
   Future<void> _initializeAudio() async {
     try {
-      // Загружаем каждый звук в отдельный плеер
-      await _shortBeepPlayer.setAsset('assets/sounds/beep_short.mp3');
-      await _longBeepPlayer.setAsset('assets/sounds/beep_long.mp3');
-      await _shortBeepPlayer.setLoopMode(LoopMode.off);
-      await _longBeepPlayer.setLoopMode(LoopMode.off);
-      await _shortBeepPlayer.seek(Duration.zero);
-      await _longBeepPlayer.seek(Duration.zero);
+      await _countdownPlayer.setAsset('assets/sounds/countdown.wav');
+      await _countdownPlayer.setLoopMode(LoopMode.off);
+      await _countdownPlayer.seek(Duration.zero);
 
       setState(() {
         _soundsLoaded = true;
@@ -69,10 +63,15 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_soundsLoaded) _initializeAudio();
+  }
+
+  @override
   void dispose() {
     _currentTimer?.cancel();
-    _shortBeepPlayer.dispose();
-    _longBeepPlayer.dispose();
+    _countdownPlayer.dispose();
     super.dispose();
   }
 
@@ -260,10 +259,9 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
 
   Future<void> _startSequence() async {
     if (_timers.isEmpty || _isRunning || !_soundsLoaded) return;
-    const startDelay = 3;
 
-    _playCountdown(startDelay);
-    await Future.delayed(const Duration(seconds: startDelay + 1), () {
+    _playCountdown(isStart: true);
+    await Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _isRunning = true;
         _isCompleted = false;
@@ -282,7 +280,9 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     _currentTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_seconds.value > 0) {
         _seconds.value--;
-        if (_minutes.value == 0 && _seconds.value == 5) _playCountdown(5);
+        if (_minutes.value == 0 && _seconds.value == 5) {
+          _playCountdown(isStart: false);
+        }
       } else if (_minutes.value > 0) {
         _minutes.value--;
         _seconds.value = 59;
@@ -292,28 +292,11 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     });
   }
 
-  void _playCountdown(int countdown) {
-    _playShortBeep();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (timer.tick < countdown) _playShortBeep();
-      if (timer.tick == countdown) _playLongBeep();
-      if (timer.tick > countdown) timer.cancel();
-    });
-  }
-
-  void _playShortBeep() {
+  void _playCountdown({required bool isStart}) {
     try {
-      _shortBeepPlayer.seek(Duration.zero);
-      _shortBeepPlayer.play();
-    } catch (e) {
-      // не найден звук, продолжаем работать
-    }
-  }
-
-  void _playLongBeep() {
-    try {
-      _longBeepPlayer.seek(Duration.zero);
-      _longBeepPlayer.play();
+      final pos = isStart ? Duration(seconds: 2) : Duration.zero;
+      _countdownPlayer.seek(pos);
+      _countdownPlayer.play();
     } catch (e) {
       // не найден звук, продолжаем работать
     }
