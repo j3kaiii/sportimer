@@ -64,7 +64,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
         _soundsLoaded = true;
       });
     } catch (e) {
-      print('Ошибка загрузки звуков: $e');
+      debugPrint('Ошибка загрузки звуков: $e');
     }
   }
 
