@@ -13,12 +13,28 @@ class TimerItem extends HiveObject {
   final int position;
   @HiveField(3)
   final String sequenceId;
+  @HiveField(4)
+  final bool isRest;
+  @HiveField(5)
+  int? _difficultyIndex;
 
-  TimerItem(
-      {required this.id,
-      required this.seconds,
-      required this.position,
-      required this.sequenceId});
+  Difficulty get difficulty {
+    final index = _difficultyIndex ?? 1;
+    return (index >= 0 && index < Difficulty.values.length)
+        ? Difficulty.values[index]
+        : Difficulty.medium;
+  }
+
+  set unitType(Difficulty value) => _difficultyIndex = value.index;
+
+  TimerItem({
+    required this.id,
+    required this.seconds,
+    required this.position,
+    required this.sequenceId,
+    required this.isRest,
+    Difficulty difficulty = Difficulty.medium,
+  }) : _difficultyIndex = difficulty.index;
 
   // Hive не дает сохранять один объект в разные боксы, нужна копия
   static TimerItem copy(TimerItem item) => TimerItem(
@@ -26,21 +42,47 @@ class TimerItem extends HiveObject {
         seconds: item.seconds,
         position: item.position,
         sequenceId: item.sequenceId,
+        isRest: item.isRest,
+        difficulty: item.difficulty,
       );
 
-  factory TimerItem.create(int seconds, int position, String sequenceId) {
+  factory TimerItem.createTraining(
+    int seconds,
+    int position,
+    String sequenceId,
+    Difficulty difficulty,
+  ) {
     final id = const UuidV4().generate();
     return TimerItem(
       id: id,
       seconds: seconds,
       position: position,
       sequenceId: sequenceId,
+      isRest: false,
+      difficulty: difficulty,
+    );
+  }
+
+  factory TimerItem.createRest(
+    int seconds,
+    int position,
+    String sequenceId,
+  ) {
+    final id = const UuidV4().generate();
+    return TimerItem(
+      id: id,
+      seconds: seconds,
+      position: position,
+      sequenceId: sequenceId,
+      isRest: true,
+      difficulty: Difficulty.medium,
     );
   }
 
   @override
   String toString() =>
-      'TimerItem $id, seconds: $seconds, position: $position, sequenceId: $sequenceId';
+      'TimerItem $id, seconds: $seconds, position: $position, '
+      'sequenceId: $sequenceId, isRest: $isRest, difficulty: $difficulty';
 
   String displayAsTime() {
     int m = seconds ~/ 60;
@@ -59,4 +101,11 @@ class TimerData {
   TimerData({required this.min, required this.sec});
 
   int get toSeconds => min * _secondsPerMin + sec;
+}
+
+/// Типы единиц измерения для продуктов
+enum Difficulty {
+  light,
+  medium,
+  hard,
 }

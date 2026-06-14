@@ -46,7 +46,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "timerListTitle": "Таймеры",
+  "timerListTitle": "Мои таймеры",
   "@timerListTitle": {
     "type": "text",
     "placeholders": {}

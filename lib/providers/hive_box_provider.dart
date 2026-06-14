@@ -17,7 +17,7 @@ class HiveBoxProvider extends InheritedWidget {
 
   static HiveBoxProvider of(BuildContext context) {
     final result =
-        context.dependOnInheritedWidgetOfExactType<HiveBoxProvider>();
+        context.getInheritedWidgetOfExactType<HiveBoxProvider>();
     assert(result != null, 'No HiveBoxProvider found in context');
     return result!;
   }

@@ -46,7 +46,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "timerListTitle": "Timers",
+  "timerListTitle": "My Timers",
   "@timerListTitle": {
     "type": "text",
     "placeholders": {}

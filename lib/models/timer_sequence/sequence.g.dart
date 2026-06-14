@@ -19,17 +19,20 @@ class SequenceAdapter extends TypeAdapter<Sequence> {
     return Sequence(
       fields[0] as String,
       fields[1] as String,
+      fields[2] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Sequence obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.position);
   }
 
   @override

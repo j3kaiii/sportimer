@@ -21,13 +21,14 @@ class TimerItemAdapter extends TypeAdapter<TimerItem> {
       seconds: fields[1] as int,
       position: fields[2] as int,
       sequenceId: fields[3] as String,
-    );
+      isRest: fields[4] as bool,
+    ).._difficultyIndex = fields[5] as int?;
   }
 
   @override
   void write(BinaryWriter writer, TimerItem obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,11 @@ class TimerItemAdapter extends TypeAdapter<TimerItem> {
       ..writeByte(2)
       ..write(obj.position)
       ..writeByte(3)
-      ..write(obj.sequenceId);
+      ..write(obj.sequenceId)
+      ..writeByte(4)
+      ..write(obj.isRest)
+      ..writeByte(5)
+      ..write(obj._difficultyIndex);
   }
 
   @override

@@ -31,12 +31,14 @@ class AppLocalizations {
   String get btnResume => Intl.message('Продолжить', name: 'btnResume');
   String get btnReset => Intl.message('Сбросить', name: 'btnReset');
   String get btnSave => Intl.message('Сохранить', name: 'btnSave');
-  String get timerListTitle => Intl.message('Таймеры', name: 'timerListTitle');
+  String get timerListTitle =>
+      Intl.message('Мои таймеры', name: 'timerListTitle');
   String get changeTitle =>
       Intl.message('Изменить название', name: 'changeTitle');
   String get setTimerTitle =>
       Intl.message('Установка таймера', name: 'setTimerTitle');
   String get setTime => Intl.message('Установить', name: 'setTime');
+  String get listIsEmpty => Intl.message('Список пуст', name: 'listIsEmpty');
 
   String orderedName(int index) => Intl.message(
         'Набор $index',

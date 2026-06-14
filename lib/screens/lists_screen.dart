@@ -1,129 +1,133 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sportimer/application/consts.dart';
 import 'package:sportimer/application/localizations.dart';
-import 'package:sportimer/models/timer_sequence/sequence.dart';
-import 'package:sportimer/screens/common_content_screen.dart';
+import 'package:sportimer/application/theme.dart';
+import 'package:sportimer/blocs/screens/list_screen_bloc/list_screen_bloc.dart';
 import 'package:sportimer/utils/context_extension.dart';
 import 'package:sportimer/widgets/list_item.dart';
-import 'package:uuid/v4.dart';
 
-/// Экран списков таймеров.
-///
-/// Содержит все ранее созданные последовательности таймеров
-class ListsScreen extends StatefulWidget {
+class ListsScreen extends StatelessWidget {
   const ListsScreen({super.key});
-
-  @override
-  State<ListsScreen> createState() => _ListsScreenState();
-}
-
-class _ListsScreenState extends State<ListsScreen> {
-  late final TextEditingController _textController;
-  late final Box<Sequence> _sequenceBox;
-
-  @override
-  void initState() {
-    super.initState();
-    _textController = TextEditingController();
-    _sequenceBox = Hive.box<Sequence>(sequenceBoxName);
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final loc = context.loc;
-    return CommonContentScreen(
-      title: loc.timerListTitle,
-      floatingButton: ElevatedButton(
-        onPressed: () async {
-          final next = _sequenceBox.length + 1;
-          final sequence =
-              Sequence(const UuidV4().generate(), loc.orderedName(next));
-          await _sequenceBox.put(sequence.id, sequence);
-          if (context.mounted) {
-            context.goNamed(sequenceName, extra: sequence);
-          }
-        },
-        style: context.theme.buttonStyle,
-        child: Text(
-          loc.btnAdd.toUpperCase(),
-          style: context.theme.buttonTextStyle,
+    final theme = context.theme;
+
+    return Scaffold(
+      backgroundColor: theme.primaryBgColor,
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildAppBar(context, loc, theme),
+            Expanded(child: _buildList(context, loc, theme)),
+          ],
         ),
       ),
-      floatingButtonLocation: FloatingActionButtonLocation.centerFloat,
-      child: _buildList(context, loc),
+      floatingActionButton: _buildAddButton(context, loc, theme),
     );
   }
 
-  // Перенести на экран создания сиквенции
-
-  // String? _validate(String? input, AppLocalizations loc) {
-  //   if (input == null || input.isEmpty) {
-  //     return 'error';
-  //   } else if (_listsBox.values.any((l) => l.name == input)) {
-  //     return 'error';
-  //   }
-  //   return null;
-  // }
-
-  // void _onAddPressed() {
-  //   if (_isCreating) {
-  //     _validator = _validate(_textController.text, context.loc);
-  //     if (_validator == null) {
-  //       _listsBox.add(Sequence(_textController.text));
-  //       _textController.text = '';
-  //       setState(() {
-  //         _isCreating = !_isCreating;
-  //       });
-  //     }
-  //   } else {
-  //     setState(() {
-  //       _isCreating = !_isCreating;
-  //     });
-  //   }
-  // }
-
-  // void _onCancel() {
-  //   setState(() {
-  //     _textController.text = '';
-  //     _validator = null;
-  //     _isCreating = !_isCreating;
-  //   });
-  // }
-
-  Widget _buildList(BuildContext context, AppLocalizations loc) {
-    const axisSpacing = 8.0;
-    return ValueListenableBuilder(
-      valueListenable: _sequenceBox.listenable(),
-      builder: ((context, value, _) {
-        final lists = value.values.toList();
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: axisSpacing,
-              mainAxisSpacing: axisSpacing,
-            ),
-            itemCount: lists.length,
-            itemBuilder: (context, index) => ListItem(
-              name: lists[index].name,
-              onTap: () => context.goNamed(
-                sequenceName,
-                extra: lists[index],
-              ),
-            ),
-          ),
-        );
-      }),
+  Widget _buildAppBar(
+    BuildContext context,
+    AppLocalizations loc,
+    SportimerThemeData theme,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+      child: Text(
+        loc.timerListTitle,
+        style: theme.titleTextStyle,
+      ),
     );
+  }
+
+  Widget _buildAddButton(
+    BuildContext context,
+    AppLocalizations loc,
+    SportimerThemeData theme,
+  ) {
+    const size = 56.0;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        gradient: SportimerThemeData.workoutGradient,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: theme.activeItemColor.withValues(alpha: 0.35),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => _addSequence(context, loc),
+          child: const Icon(Icons.add, color: Colors.white, size: 28),
+        ),
+      ),
+    );
+  }
+}
+
+Widget _buildList(
+  BuildContext context,
+  AppLocalizations loc,
+  SportimerThemeData theme,
+) {
+  return BlocConsumer<ListScreenBloc, ListScreenState>(
+      listener: (context, state) {
+    if (state is ListScreenSequenceAdded) {
+      context.goNamed(sequenceName, extra: state.sequence);
+    }
+  },
+      builder: (context, state) {
+    if (state is ListScreenSuccess) {
+      final list = state.list;
+      if (list.isEmpty) {
+        return Center(
+            child: Text(
+          loc.listIsEmpty,
+          style: theme.cardMetaStyle,
+        ));
+      }
+
+      return ListView.separated(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 80),
+        itemCount: list.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
+        itemBuilder: (context, index) {
+          final seq = list[index];
+          return ListItem(
+            name: seq.sequence.name,
+            intervalsCount: seq.intervalsCount,
+            totalDuration: seq.totalDuration.toString(),
+            isCyclic: seq.isCyclic,
+            hasWorkout: seq.hasWorkout,
+            hasRest: seq.hasRest,
+            onTap: () => context.goNamed(sequenceName, extra: seq.sequence),
+          );
+        },
+      );
+    }
+    return CircularProgressIndicator();
+  });
+}
+
+Future<void> _addSequence(
+  BuildContext context,
+  AppLocalizations loc,
+) async {
+  final bloc = context.read<ListScreenBloc>();
+  final currentState = bloc.state;
+  if (currentState is ListScreenLoadSuccess) {
+    final nextName = loc.orderedName(currentState.list.length + 1);
+    bloc.add(ListScreenAddSequenceEvent(nextName));
   }
 }

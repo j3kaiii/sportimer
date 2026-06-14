@@ -8,11 +8,13 @@ class Sequence extends HiveObject {
   final String id;
   @HiveField(1)
   String name;
+  @HiveField(2)
+  int position; 
 
-  Sequence(this.id, this.name);
+  Sequence(this.id, this.name, this.position);
 
-  Sequence copyWith(String updated) => Sequence(id, updated);
+  Sequence copyWith(String updated) => Sequence(id, updated, position);
 
   @override
-  String toString() => 'Sequence id: $id, name: $name,';
+  String toString() => 'Sequence id: $id, name: $name, position: $position';
 }

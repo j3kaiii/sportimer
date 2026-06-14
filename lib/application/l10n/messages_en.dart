@@ -64,6 +64,6 @@ class MessageLookup extends MessageLookupByLibrary {
     'setTime': MessageLookupByLibrary.simpleMessage('Set'),
     'setTimerTitle': MessageLookupByLibrary.simpleMessage('Set timer'),
     'timerByOrder': m1,
-    'timerListTitle': MessageLookupByLibrary.simpleMessage('Timers')
+    'timerListTitle': MessageLookupByLibrary.simpleMessage('My Timers')
   };
 }
