@@ -11,6 +11,7 @@ import 'package:sportimer/blocs/screens/list_screen_bloc/list_screen_bloc.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
 import 'package:sportimer/models/timer_sequence/sequence.dart';
 import 'package:sportimer/providers/hive_box_provider.dart';
+import 'package:sportimer/utils/context_extension.dart';
 
 class SportimerApp extends StatelessWidget {
   static final List<LocalizationsDelegate<dynamic>> _localizationsDelegates = [
@@ -41,9 +42,8 @@ class SportimerApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) {
-            final boxProvider = HiveBoxProvider.of(context);
             return ListScreenBloc(
-                boxProvider.sequenceBox, boxProvider.timersBox)
+                context.sequenceBox, context.timersBox)
               ..add(const ListScreenShownEvent());
           },
         ),

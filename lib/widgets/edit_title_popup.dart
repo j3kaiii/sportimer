@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sportimer/utils/context_extension.dart';
 
 class EditTitlePopup extends StatefulWidget {
-  final String title;
-  const EditTitlePopup({super.key, required this.title});
+  final List<String> existingTitles;
+  final String prevTitle;
+  const EditTitlePopup(
+      {super.key, required this.existingTitles, required this.prevTitle});
 
   @override
   State<EditTitlePopup> createState() => _EditTitlePopupState();
@@ -16,7 +18,7 @@ class _EditTitlePopupState extends State<EditTitlePopup> {
   void initState() {
     super.initState();
 
-    _controller = TextEditingController(text: widget.title);
+    _controller = TextEditingController(text: widget.prevTitle);
   }
 
   @override
@@ -50,7 +52,7 @@ class _EditTitlePopupState extends State<EditTitlePopup> {
         TextButton(
           onPressed: () {
             final text = _controller?.text;
-            if (text != null && text.isNotEmpty && text != widget.title) {
+            if (_isTitleCorrect(text)) {
               Navigator.of(context).pop(text);
             }
           },
@@ -58,5 +60,13 @@ class _EditTitlePopupState extends State<EditTitlePopup> {
         )
       ],
     );
+  }
+
+  bool _isTitleCorrect(String? title) {
+    if (title == null) return false;
+    if (widget.existingTitles.isEmpty) return true;
+    final hasTitle = widget.existingTitles
+        .any((t) => t.toLowerCase() == title.toLowerCase());
+    return title != widget.prevTitle && !hasTitle;
   }
 }

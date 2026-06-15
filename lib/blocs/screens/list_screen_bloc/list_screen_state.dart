@@ -1,6 +1,5 @@
 part of 'list_screen_bloc.dart';
 
-
 abstract class ListScreenState extends Equatable {
   const ListScreenState();
 
