@@ -107,7 +107,7 @@ Widget _buildList(
           return ListItem(
             name: seq.sequence.name,
             intervalsCount: seq.intervalsCount,
-            totalDuration: seq.totalDuration.toString(),
+            totalDuration: loc.formatDuration(seq.totalDuration),
             isCyclic: seq.isCyclic,
             hasWorkout: seq.hasWorkout,
             hasRest: seq.hasRest,

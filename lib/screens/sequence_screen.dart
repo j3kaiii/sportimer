@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sportimer/application/consts.dart';
 import 'package:sportimer/application/localizations.dart';
 import 'package:sportimer/application/theme.dart';
+import 'package:sportimer/blocs/screens/list_screen_bloc/list_screen_bloc.dart';
 import 'package:sportimer/blocs/screens/sequence_screen_bloc/sequence_screen_bloc.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
 import 'package:sportimer/models/timer_sequence/sequence.dart';
@@ -263,6 +264,7 @@ class SequenceScreen extends StatelessWidget {
     if (result == null) return;
 
     context.read<SequenceScreenBloc>().add(SequenceScreenTimerAddEvent(result));
+    context.read<ListScreenBloc>().add(ListScreenUpdateEvent());
   }
 
   Future<void> _showEditTimerPopup(
@@ -277,7 +279,12 @@ class SequenceScreen extends StatelessWidget {
       builder: (_) => EditTimerPopup(initialSeconds: timer.seconds),
     );
     if (res != null) {
-      bloc.add(SequenceScreenTimerChangeEvent(res));
+      bloc.add(SequenceScreenTimerChangeEvent(
+        TimerData(min: res.min, sec: res.sec, timerId: timer.id),
+      ));
+      if (context.mounted) {
+        context.read<ListScreenBloc>().add(ListScreenUpdateEvent());
+      }
     }
   }
 
@@ -295,6 +302,9 @@ class SequenceScreen extends StatelessWidget {
     );
     if (res != null) {
       bloc.add(SequenceScreenTitleChangeEvent(res));
+      if (context.mounted) {
+        context.read<ListScreenBloc>().add(ListScreenUpdateEvent());
+      }
     }
   }
 }
