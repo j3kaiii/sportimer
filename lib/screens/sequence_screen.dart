@@ -197,8 +197,8 @@ class SequenceScreen extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: theme.activeItemColor.withValues(alpha: 0.3),
-                    blurRadius: 20,
-                    offset: const Offset(0, 6),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),

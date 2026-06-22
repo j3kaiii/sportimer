@@ -59,8 +59,8 @@ class ListsScreen extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: theme.activeItemColor.withValues(alpha: 0.35),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
