@@ -17,6 +17,7 @@ class ListScreenBloc extends Bloc<ListScreenEvent, ListScreenState> {
   ListScreenBloc(this.sequenceBox, this.timers)
       : super(ListScreenBlocInitial()) {
     on<ListScreenShownEvent>(_mapScreenShownToState);
+    on<ListScreenUpdateEvent>(_mapScreenUpdatedToState);
     on<ListScreenAddSequenceEvent>(_mapSequenceAddedToState);
   }
 
@@ -39,7 +40,30 @@ class ListScreenBloc extends Bloc<ListScreenEvent, ListScreenState> {
         );
       },
     ).toList());
-    emit(ListScreenLoadSuccess(list: data));
+    emit(ListScreenLoadSuccess(list: List.from(data)));
+  }
+
+  Future<void> _mapScreenUpdatedToState(
+    ListScreenUpdateEvent event,
+    Emitter<ListScreenState> emit,
+  ) async {
+    data
+      ..clear()
+      ..addAll(sequenceBox.values.map(
+        (s) {
+          final seqTimers =
+              timers.values.where((t) => t.sequenceId == s.id).toList();
+          return SequenceData(
+            sequence: s,
+            intervalsCount: seqTimers.length,
+            totalDuration: seqTimers.fold(0, (v, e) => v + e.seconds),
+            hasRest: seqTimers.any((t) => t.isRest),
+            isCyclic: false,
+            hasWorkout: seqTimers.any((t) => !t.isRest),
+          );
+        },
+      ).toList());
+    emit(ListScreenLoadSuccess(list: List.from(data)));
   }
 
   Future<void> _mapSequenceAddedToState(

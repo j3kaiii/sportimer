@@ -65,7 +65,14 @@ class SequenceScreenBloc
     SequenceScreenTimerChangeEvent event,
     Emitter<SequenceScreenState> emit,
   ) async {
-    // TODO
+    final timerId = event.data.timerId;
+    if (timerId == null) return;
+    final existing = timerBox.get(timerId);
+    if (existing == null) return;
+    final updated = existing.copyWith(seconds: event.data.toSeconds);
+    await timerBox.put(updated.id, updated);
+    final list = getActualTimers();
+    emit(SequenceScreenLoadSuccess(currentSequence.name, list));
   }
 
   List<TimerItem> getActualTimers() => timerBox.values.where((t) => t.sequenceId == currentSequence.id).sortedBy<num>((t) => t.position);

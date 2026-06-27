@@ -58,6 +58,12 @@ class AppLocalizations {
       Intl.message('Тренировка', name: 'isTrainingTitle');
   String get addTimer => Intl.message('Добавить таймер', name: 'addTimer');
   String get nextUpTimer => Intl.message('Далее: ', name: 'nextUpTimer');
+
+  String formatDuration(int totalSeconds) {
+    final m = totalSeconds ~/ 60;
+    final s = totalSeconds % 60;
+    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
+  }
 }
 
 class DefLocalizationsDelegate<T> extends LocalizationsDelegate<T> {

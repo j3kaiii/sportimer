@@ -36,6 +36,16 @@ class TimerItem extends HiveObject {
     Difficulty difficulty = Difficulty.medium,
   }) : _difficultyIndex = difficulty.index;
 
+  TimerItem copyWith({int? seconds, int? position, Difficulty? difficulty}) =>
+      TimerItem(
+        id: id,
+        seconds: seconds ?? this.seconds,
+        position: position ?? this.position,
+        sequenceId: sequenceId,
+        isRest: isRest,
+        difficulty: difficulty ?? this.difficulty,
+      );
+
   // Hive не дает сохранять один объект в разные боксы, нужна копия
   static TimerItem copy(TimerItem item) => TimerItem(
         id: const UuidV4().generate(),
@@ -84,12 +94,6 @@ class TimerItem extends HiveObject {
       'TimerItem $id, seconds: $seconds, position: $position, '
       'sequenceId: $sequenceId, isRest: $isRest, difficulty: $difficulty';
 
-  String displayAsTime() {
-    int m = seconds ~/ 60;
-    int s = seconds % 60;
-    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
-  }
-
   TimerData get timerData => TimerData(min: seconds ~/ 60, sec: seconds % 60);
 }
 
@@ -97,8 +101,9 @@ class TimerData {
   static const _secondsPerMin = 60;
   final int min;
   final int sec;
+  final String? timerId;
 
-  TimerData({required this.min, required this.sec});
+  TimerData({required this.min, required this.sec, this.timerId});
 
   int get toSeconds => min * _secondsPerMin + sec;
 }
