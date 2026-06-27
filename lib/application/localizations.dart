@@ -54,7 +54,10 @@ class AppLocalizations {
 
   String get completedMsg => Intl.message('Завершено!', name: 'completedMsg');
   String get isRestTitle => Intl.message('Отдых', name: 'isRestTitle');
+  String get isTrainingTitle =>
+      Intl.message('Тренировка', name: 'isTrainingTitle');
   String get addTimer => Intl.message('Добавить таймер', name: 'addTimer');
+  String get nextUpTimer => Intl.message('Далее: ', name: 'nextUpTimer');
 }
 
 class DefLocalizationsDelegate<T> extends LocalizationsDelegate<T> {

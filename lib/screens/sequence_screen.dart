@@ -10,6 +10,7 @@ import 'package:sportimer/models/timer_sequence/sequence.dart';
 import 'package:sportimer/utils/context_extension.dart';
 import 'package:sportimer/widgets/edit_title_popup.dart';
 import 'package:sportimer/widgets/edit_timer_popup.dart';
+import 'package:sportimer/widgets/return_button.dart';
 import 'package:sportimer/widgets/sequence_timer_tile.dart';
 import 'package:sportimer/widgets/timer_popup.dart';
 
@@ -50,20 +51,7 @@ class SequenceScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 12, 20, 12),
       child: Row(
         children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: theme.secondaryBgColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              icon: const Icon(Icons.arrow_back, size: 18),
-              color: theme.textSecondary,
-              onPressed: () => context.pop(),
-            ),
-          ),
+          ReturnButton(),
           const SizedBox(width: 12),
           _buildEditableTitle(context, theme),
         ],

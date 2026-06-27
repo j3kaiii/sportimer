@@ -36,6 +36,20 @@ class SportimerThemeData extends CustomThemeData {
     colors: [kAccentWorkout, kAccentRest],
   );
 
+  // Running screen colors
+  static const kAccentWorkoutLight = Color(0xFFF87171);
+  static const kAccentRestLight = Color(0xFF34D399);
+  static const kAccentRestBrighter = Color(0xFF6EE7B7);
+  static const kRingBgWorkout = Color(0x1EEF4444);
+  static const kRingBgRest = Color(0x4010B981);
+  static const kRunningBgEnd = Color(0xFF1a1230);
+
+  static const restGradient = LinearGradient(
+    colors: [kAccentRestLight, kAccentRestBrighter],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
   final Color primaryBgColor;
   final Color secondaryBgColor;
   final Color activeItemColor;
