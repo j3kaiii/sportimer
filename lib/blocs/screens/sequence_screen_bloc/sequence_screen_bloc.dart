@@ -16,7 +16,10 @@ class SequenceScreenBloc
 
   late Sequence currentSequence;
 
-  SequenceScreenBloc({required this.sequenceBox, required this.timerBox,}) : super(SequenceScreenInitial()) {
+  SequenceScreenBloc({
+    required this.sequenceBox,
+    required this.timerBox,
+  }) : super(SequenceScreenInitial()) {
     on<SequenceScreenShownEvent>(_mapScreenShownToState);
     on<SequenceScreenTitleChangeEvent>(_mapScreenTitleChangedToState);
     on<SequenceScreenTimerAddEvent>(_mapScreenTimerAddedToState);
@@ -29,11 +32,11 @@ class SequenceScreenBloc
   ) async {
     currentSequence = event.sequence;
     final list = getActualTimers();
-    
+
     emit(SequenceScreenLoadSuccess(event.sequence.name, list));
   }
 
-   Future<void> _mapScreenTitleChangedToState(
+  Future<void> _mapScreenTitleChangedToState(
     SequenceScreenTitleChangeEvent event,
     Emitter<SequenceScreenState> emit,
   ) async {
@@ -41,7 +44,7 @@ class SequenceScreenBloc
     sequenceBox.put(currentSequence.id, currentSequence);
 
     final list = getActualTimers();
-    
+
     emit(SequenceScreenLoadSuccess(currentSequence.name, list));
   }
 
@@ -51,11 +54,11 @@ class SequenceScreenBloc
   ) async {
     final data = event.data;
     var list = getActualTimers();
-     final timer = data.isRest
+    final timer = data.isRest
         ? TimerItem.createRest(
             data.seconds, list.length + 1, currentSequence.id)
-        : TimerItem.createTraining(data.seconds, list.length + 1,
-            currentSequence.id, data.difficulty);
+        : TimerItem.createTraining(
+            data.seconds, list.length + 1, currentSequence.id, data.difficulty);
     timerBox.put(timer.id, timer);
     list = getActualTimers();
     emit(SequenceScreenLoadSuccess(currentSequence.name, list));
@@ -69,12 +72,16 @@ class SequenceScreenBloc
     if (timerId == null) return;
     final existing = timerBox.get(timerId);
     if (existing == null) return;
-    final updated = existing.copyWith(seconds: event.data.toSeconds);
+    final updated = existing.copyWith(
+      seconds: event.data.toSeconds,
+      isRest: event.data.isRest,
+    );
     await timerBox.put(updated.id, updated);
     final list = getActualTimers();
     emit(SequenceScreenLoadSuccess(currentSequence.name, list));
   }
 
-  List<TimerItem> getActualTimers() => timerBox.values.where((t) => t.sequenceId == currentSequence.id).sortedBy<num>((t) => t.position);
+  List<TimerItem> getActualTimers() => timerBox.values
+      .where((t) => t.sequenceId == currentSequence.id)
+      .sortedBy<num>((t) => t.position);
 }
-
