@@ -27,7 +27,8 @@ class SequenceTimerTile extends StatelessWidget {
         ? theme.accentRest.withValues(alpha: 0.2)
         : theme.activeItemColor.withValues(alpha: 0.2);
     final typeColor = isRest ? theme.accentRest : theme.activeItemColor;
-    final typeLabel = isRest ? 'ОТДЫХ' : 'ТРЕНИРОВКА';
+    final loc = context.loc;
+    final typeLabel = isRest ? loc.timerRestBadge : loc.timerTrainingBadge;
 
     final m = seconds ~/ 60;
     final s = seconds % 60;

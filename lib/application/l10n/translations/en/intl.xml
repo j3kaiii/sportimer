@@ -17,4 +17,22 @@
   <string name="timerByOrder">Timer {current} of {total}</string>
   <string name="completedMsg">Completed!</string>
   <string name="isRestTitle">Relax</string>
+  <string name="isTrainingTitle">Workout</string>
+  <string name="addTimer">Add timer</string>
+  <string name="nextUpTimer">Next: </string>
+  <string name="listIsEmpty">List is empty</string>
+  <string name="newTimerTitle">New timer</string>
+  <string name="minutesLabel">Min</string>
+  <string name="secondsLabel">Sec</string>
+  <string name="difficultyTitle">Difficulty</string>
+  <string name="restToggleHint">Switch to rest interval</string>
+  <string name="timerRestBadge">REST</string>
+  <string name="timerTrainingBadge">WORKOUT</string>
+  <string name="cyclicBadge">Cyclic</string>
+  <string name="singlePassBadge">Single pass</string>
+  <string name="loadingTagline">Create your timer</string>
+  <string name="intervalsCountLabel">{count} intervals</string>
+  <string name="_difficultyLight">Light</string>
+  <string name="_difficultyMedium">Medium</string>
+  <string name="_difficultyHard">Hard</string>
 </resources>

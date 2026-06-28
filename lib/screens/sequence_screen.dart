@@ -115,10 +115,11 @@ class SequenceScreen extends StatelessWidget {
                 return addTimerButton;
               }
               final t = timers[index];
+              final loc = context.loc;
               return SequenceTimerTile(
                 seconds: t.seconds,
                 isRest: t.isRest,
-                difficulty: t.isRest ? null : t.difficulty.name,
+                difficulty: t.isRest ? null : loc.difficultyLabel(t.difficulty),
                 onTap: () => _showEditTimerPopup(context, t),
               );
             },
@@ -264,11 +265,19 @@ class SequenceScreen extends StatelessWidget {
     if (state is! SequenceScreenLoadSuccess) return;
     final res = await showDialog<TimerData>(
       context: context,
-      builder: (_) => EditTimerPopup(initialSeconds: timer.seconds),
+      builder: (_) => EditTimerPopup(
+        initialSeconds: timer.seconds,
+        initialIsRest: timer.isRest,
+      ),
     );
     if (res != null) {
       bloc.add(SequenceScreenTimerChangeEvent(
-        TimerData(min: res.min, sec: res.sec, timerId: timer.id),
+        TimerData(
+          min: res.min,
+          sec: res.sec,
+          timerId: timer.id,
+          isRest: res.isRest,
+        ),
       ));
       if (context.mounted) {
         context.read<ListScreenBloc>().add(ListScreenUpdateEvent());

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multiple_localization/multiple_localization.dart';
 import 'package:sportimer/application/l10n/messages_all_locales.dart';
+import 'package:sportimer/models/timer_item/timer_item.dart';
 
 typedef DelegateBuilder<T> = FutureOr<T> Function(String locale);
 
@@ -58,6 +59,42 @@ class AppLocalizations {
       Intl.message('Тренировка', name: 'isTrainingTitle');
   String get addTimer => Intl.message('Добавить таймер', name: 'addTimer');
   String get nextUpTimer => Intl.message('Далее: ', name: 'nextUpTimer');
+
+  String get newTimerTitle =>
+      Intl.message('Новый таймер', name: 'newTimerTitle');
+  String get minutesLabel => Intl.message('Мин', name: 'minutesLabel');
+  String get secondsLabel => Intl.message('Сек', name: 'secondsLabel');
+  String get difficultyTitle =>
+      Intl.message('Сложность', name: 'difficultyTitle');
+  String get restToggleHint =>
+      Intl.message('Переключить на интервал отдыха', name: 'restToggleHint');
+  String get timerRestBadge => Intl.message('ОТДЫХ', name: 'timerRestBadge');
+  String get timerTrainingBadge =>
+      Intl.message('ТРЕНИРОВКА', name: 'timerTrainingBadge');
+  String get cyclicBadge => Intl.message('Цикличный', name: 'cyclicBadge');
+  String get singlePassBadge =>
+      Intl.message('Однопроходный', name: 'singlePassBadge');
+  String get loadingTagline =>
+      Intl.message('Создай свой таймер', name: 'loadingTagline');
+
+  String intervalsCountLabel(int count) => Intl.message(
+        '$count интервалов',
+        name: 'intervalsCountLabel',
+        args: [count],
+      );
+
+  String get _difficultyLight =>
+      Intl.message('Легкая', name: '_difficultyLight');
+  String get _difficultyMedium =>
+      Intl.message('Средняя', name: '_difficultyMedium');
+  String get _difficultyHard =>
+      Intl.message('Сложная', name: '_difficultyHard');
+
+  String difficultyLabel(Difficulty difficulty) => switch (difficulty) {
+        Difficulty.light => _difficultyLight,
+        Difficulty.medium => _difficultyMedium,
+        Difficulty.hard => _difficultyHard,
+      };
 
   String formatDuration(int totalSeconds) {
     final m = totalSeconds ~/ 60;

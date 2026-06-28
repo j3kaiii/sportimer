@@ -41,15 +41,21 @@ class MessageLookup extends MessageLookupByLibrary {
         ifAbsent: ifAbsent ?? failedLookup);
   }
 
-  static m0(index) => "Sequence ${index}";
+  static m0(count) => "${count} intervals";
 
-  static m1(current, total) => "Timer ${current} of ${total}";
+  static m1(index) => "Sequence ${index}";
+
+  static m2(current, total) => "Timer ${current} of ${total}";
 
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-      'applicationName': MessageLookupByLibrary.simpleMessage('Sportimer'),
+      '_difficultyHard': MessageLookupByLibrary.simpleMessage('Hard'),
+    '_difficultyLight': MessageLookupByLibrary.simpleMessage('Light'),
+    '_difficultyMedium': MessageLookupByLibrary.simpleMessage('Medium'),
+    'addTimer': MessageLookupByLibrary.simpleMessage('Add timer'),
+    'applicationName': MessageLookupByLibrary.simpleMessage('Sportimer'),
     'btnAdd': MessageLookupByLibrary.simpleMessage('Add'),
     'btnCancel': MessageLookupByLibrary.simpleMessage('Cancel'),
     'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
@@ -60,10 +66,25 @@ class MessageLookup extends MessageLookupByLibrary {
     'btnStart': MessageLookupByLibrary.simpleMessage('Start'),
     'changeTitle': MessageLookupByLibrary.simpleMessage('Change name'),
     'completedMsg': MessageLookupByLibrary.simpleMessage('Completed!'),
-    'orderedName': m0,
+    'cyclicBadge': MessageLookupByLibrary.simpleMessage('Cyclic'),
+    'difficultyTitle': MessageLookupByLibrary.simpleMessage('Difficulty'),
+    'intervalsCountLabel': m0,
+    'isRestTitle': MessageLookupByLibrary.simpleMessage('Relax'),
+    'isTrainingTitle': MessageLookupByLibrary.simpleMessage('Workout'),
+    'listIsEmpty': MessageLookupByLibrary.simpleMessage('List is empty'),
+    'loadingTagline': MessageLookupByLibrary.simpleMessage('Create your timer'),
+    'minutesLabel': MessageLookupByLibrary.simpleMessage('Min'),
+    'newTimerTitle': MessageLookupByLibrary.simpleMessage('New timer'),
+    'nextUpTimer': MessageLookupByLibrary.simpleMessage('Next: '),
+    'orderedName': m1,
+    'restToggleHint': MessageLookupByLibrary.simpleMessage('Switch to rest interval'),
+    'secondsLabel': MessageLookupByLibrary.simpleMessage('Sec'),
     'setTime': MessageLookupByLibrary.simpleMessage('Set'),
     'setTimerTitle': MessageLookupByLibrary.simpleMessage('Set timer'),
-    'timerByOrder': m1,
-    'timerListTitle': MessageLookupByLibrary.simpleMessage('My Timers')
+    'singlePassBadge': MessageLookupByLibrary.simpleMessage('Single pass'),
+    'timerByOrder': m2,
+    'timerListTitle': MessageLookupByLibrary.simpleMessage('Timers'),
+    'timerRestBadge': MessageLookupByLibrary.simpleMessage('REST'),
+    'timerTrainingBadge': MessageLookupByLibrary.simpleMessage('WORKOUT')
   };
 }

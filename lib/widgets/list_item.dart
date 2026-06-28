@@ -25,6 +25,7 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final loc = context.loc;
     final mixed = hasWorkout && hasRest;
 
     return GestureDetector(
@@ -63,7 +64,7 @@ class ListItem extends StatelessWidget {
                       children: [
                         _MetaItem(
                           icon: Icons.timer_outlined,
-                          text: '$intervalsCount интервалов',
+                          text: loc.intervalsCountLabel(intervalsCount),
                           theme: theme,
                         ),
                         const SizedBox(width: 16),
@@ -87,7 +88,7 @@ class ListItem extends StatelessWidget {
                             : theme.cardBadgeSingleBg,
                       ),
                       child: Text(
-                        isCyclic ? 'Цикличный' : 'Однопроходный',
+                        isCyclic ? loc.cyclicBadge : loc.singlePassBadge,
                         style: theme.cardBadgeStyle.copyWith(
                           color: isCyclic
                               ? theme.cardBadgeCyclicColor

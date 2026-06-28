@@ -41,15 +41,21 @@ class MessageLookup extends MessageLookupByLibrary {
         ifAbsent: ifAbsent ?? failedLookup);
   }
 
-  static m0(index) => "Набор ${index}";
+  static m0(count) => "${count} интервалов";
 
-  static m1(current, total) => "Таймер ${current} из ${total}";
+  static m1(index) => "Набор ${index}";
+
+  static m2(current, total) => "Таймер ${current} из ${total}";
 
   @override
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-      'applicationName': MessageLookupByLibrary.simpleMessage('Спортаймер'),
+      '_difficultyHard': MessageLookupByLibrary.simpleMessage('Сложная'),
+    '_difficultyLight': MessageLookupByLibrary.simpleMessage('Легкая'),
+    '_difficultyMedium': MessageLookupByLibrary.simpleMessage('Средняя'),
+    'addTimer': MessageLookupByLibrary.simpleMessage('Добавить таймер'),
+    'applicationName': MessageLookupByLibrary.simpleMessage('Спортаймер'),
     'btnAdd': MessageLookupByLibrary.simpleMessage('Добавить'),
     'btnCancel': MessageLookupByLibrary.simpleMessage('Отменить'),
     'btnOk': MessageLookupByLibrary.simpleMessage('OK'),
@@ -60,10 +66,25 @@ class MessageLookup extends MessageLookupByLibrary {
     'btnStart': MessageLookupByLibrary.simpleMessage('Старт'),
     'changeTitle': MessageLookupByLibrary.simpleMessage('Изменить название'),
     'completedMsg': MessageLookupByLibrary.simpleMessage('Завершено!'),
-    'orderedName': m0,
+    'cyclicBadge': MessageLookupByLibrary.simpleMessage('Цикличный'),
+    'difficultyTitle': MessageLookupByLibrary.simpleMessage('Сложность'),
+    'intervalsCountLabel': m0,
+    'isRestTitle': MessageLookupByLibrary.simpleMessage('Отдых'),
+    'isTrainingTitle': MessageLookupByLibrary.simpleMessage('Тренировка'),
+    'listIsEmpty': MessageLookupByLibrary.simpleMessage('Список пуст'),
+    'loadingTagline': MessageLookupByLibrary.simpleMessage('Создай свой таймер'),
+    'minutesLabel': MessageLookupByLibrary.simpleMessage('Мин'),
+    'newTimerTitle': MessageLookupByLibrary.simpleMessage('Новый таймер'),
+    'nextUpTimer': MessageLookupByLibrary.simpleMessage('Далее: '),
+    'orderedName': m1,
+    'restToggleHint': MessageLookupByLibrary.simpleMessage('Переключить на интервал отдыха'),
+    'secondsLabel': MessageLookupByLibrary.simpleMessage('Сек'),
     'setTime': MessageLookupByLibrary.simpleMessage('Установить'),
     'setTimerTitle': MessageLookupByLibrary.simpleMessage('Установка таймера'),
-    'timerByOrder': m1,
-    'timerListTitle': MessageLookupByLibrary.simpleMessage('Мои таймеры')
+    'singlePassBadge': MessageLookupByLibrary.simpleMessage('Однопроходный'),
+    'timerByOrder': m2,
+    'timerListTitle': MessageLookupByLibrary.simpleMessage('Мои таймеры'),
+    'timerRestBadge': MessageLookupByLibrary.simpleMessage('ОТДЫХ'),
+    'timerTrainingBadge': MessageLookupByLibrary.simpleMessage('ТРЕНИРОВКА')
   };
 }

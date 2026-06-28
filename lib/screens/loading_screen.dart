@@ -55,7 +55,7 @@ class LoadingScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
                 Text(
-                  'Создай свой таймер',
+                  loc.loadingTagline,
                   style: theme.taglineStyle,
                 ),
                 const SizedBox(height: 48),

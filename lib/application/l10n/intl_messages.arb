@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2025-11-09T01:36:53.655165",
+  "@@last_modified": "2026-06-28T09:08:59.896488",
   "applicationName": "Спортаймер",
   "@applicationName": {
     "type": "text",
@@ -46,7 +46,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "timerListTitle": "Таймеры",
+  "timerListTitle": "Мои таймеры",
   "@timerListTitle": {
     "type": "text",
     "placeholders": {}
@@ -63,6 +63,11 @@
   },
   "setTime": "Установить",
   "@setTime": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "listIsEmpty": "Список пуст",
+  "@listIsEmpty": {
     "type": "text",
     "placeholders": {}
   },
@@ -83,6 +88,98 @@
   },
   "completedMsg": "Завершено!",
   "@completedMsg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isRestTitle": "Отдых",
+  "@isRestTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isTrainingTitle": "Тренировка",
+  "@isTrainingTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addTimer": "Добавить таймер",
+  "@addTimer": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nextUpTimer": "Далее: ",
+  "@nextUpTimer": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "newTimerTitle": "Новый таймер",
+  "@newTimerTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "minutesLabel": "Мин",
+  "@minutesLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "secondsLabel": "Сек",
+  "@secondsLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "difficultyTitle": "Сложность",
+  "@difficultyTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "restToggleHint": "Переключить на интервал отдыха",
+  "@restToggleHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "timerRestBadge": "ОТДЫХ",
+  "@timerRestBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "timerTrainingBadge": "ТРЕНИРОВКА",
+  "@timerTrainingBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cyclicBadge": "Цикличный",
+  "@cyclicBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "singlePassBadge": "Однопроходный",
+  "@singlePassBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loadingTagline": "Создай свой таймер",
+  "@loadingTagline": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "intervalsCountLabel": "{count} интервалов",
+  "@intervalsCountLabel": {
+    "type": "text",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "_difficultyLight": "Легкая",
+  "@_difficultyLight": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "_difficultyMedium": "Средняя",
+  "@_difficultyMedium": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "_difficultyHard": "Сложная",
+  "@_difficultyHard": {
     "type": "text",
     "placeholders": {}
   }
