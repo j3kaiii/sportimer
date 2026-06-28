@@ -36,13 +36,18 @@ class TimerItem extends HiveObject {
     Difficulty difficulty = Difficulty.medium,
   }) : _difficultyIndex = difficulty.index;
 
-  TimerItem copyWith({int? seconds, int? position, Difficulty? difficulty}) =>
+  TimerItem copyWith({
+    int? seconds,
+    int? position,
+    Difficulty? difficulty,
+    bool? isRest,
+  }) =>
       TimerItem(
         id: id,
         seconds: seconds ?? this.seconds,
         position: position ?? this.position,
         sequenceId: sequenceId,
-        isRest: isRest,
+        isRest: isRest ?? this.isRest,
         difficulty: difficulty ?? this.difficulty,
       );
 
@@ -90,8 +95,7 @@ class TimerItem extends HiveObject {
   }
 
   @override
-  String toString() =>
-      'TimerItem $id, seconds: $seconds, position: $position, '
+  String toString() => 'TimerItem $id, seconds: $seconds, position: $position, '
       'sequenceId: $sequenceId, isRest: $isRest, difficulty: $difficulty';
 
   TimerData get timerData => TimerData(min: seconds ~/ 60, sec: seconds % 60);
@@ -102,8 +106,14 @@ class TimerData {
   final int min;
   final int sec;
   final String? timerId;
+  final bool isRest;
 
-  TimerData({required this.min, required this.sec, this.timerId});
+  TimerData({
+    required this.min,
+    required this.sec,
+    this.timerId,
+    this.isRest = false,
+  });
 
   int get toSeconds => min * _secondsPerMin + sec;
 }
