@@ -231,7 +231,7 @@ class SportimerThemeData extends CustomThemeData {
           color: kAccentWorkout,
         ),
         nextUpStyle = TextStyle(
-          fontSize: 12,
+          fontSize: 14,
           color: kTextMuted,
         ),
         nextUpBadgeStyle = TextStyle(
