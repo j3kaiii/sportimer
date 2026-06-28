@@ -396,10 +396,10 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
 
     _currentTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_seconds.value > 0) {
-        _seconds.value--;
         if (_minutes.value == 0 && _seconds.value == 5) {
           _playCountdown(isStart: false);
         }
+        _seconds.value--;
       } else if (_minutes.value > 0) {
         _minutes.value--;
         _seconds.value = 59;
