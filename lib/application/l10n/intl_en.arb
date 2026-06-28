@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2025-11-09T01:39:23.116486",
+  "@@last_modified": "2026-06-28T09:11:43.344412",
   "applicationName": "Sportimer",
   "@applicationName": {
     "type": "text",
@@ -46,7 +46,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "timerListTitle": "My Timers",
+  "timerListTitle": "Timers",
   "@timerListTitle": {
     "type": "text",
     "placeholders": {}
@@ -83,6 +83,103 @@
   },
   "completedMsg": "Completed!",
   "@completedMsg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isRestTitle": "Relax",
+  "@isRestTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isTrainingTitle": "Workout",
+  "@isTrainingTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addTimer": "Add timer",
+  "@addTimer": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nextUpTimer": "Next: ",
+  "@nextUpTimer": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "listIsEmpty": "List is empty",
+  "@listIsEmpty": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "newTimerTitle": "New timer",
+  "@newTimerTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "minutesLabel": "Min",
+  "@minutesLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "secondsLabel": "Sec",
+  "@secondsLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "difficultyTitle": "Difficulty",
+  "@difficultyTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "restToggleHint": "Switch to rest interval",
+  "@restToggleHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "timerRestBadge": "REST",
+  "@timerRestBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "timerTrainingBadge": "WORKOUT",
+  "@timerTrainingBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cyclicBadge": "Cyclic",
+  "@cyclicBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "singlePassBadge": "Single pass",
+  "@singlePassBadge": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loadingTagline": "Create your timer",
+  "@loadingTagline": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "intervalsCountLabel": "{count} intervals",
+  "@intervalsCountLabel": {
+    "type": "text",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "_difficultyLight": "Light",
+  "@_difficultyLight": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "_difficultyMedium": "Medium",
+  "@_difficultyMedium": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "_difficultyHard": "Hard",
+  "@_difficultyHard": {
     "type": "text",
     "placeholders": {}
   }
