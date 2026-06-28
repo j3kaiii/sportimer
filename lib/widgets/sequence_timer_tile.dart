@@ -6,6 +6,7 @@ class SequenceTimerTile extends StatelessWidget {
   final bool isRest;
   final String? difficulty;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
 
   const SequenceTimerTile({
     super.key,
@@ -13,6 +14,7 @@ class SequenceTimerTile extends StatelessWidget {
     this.isRest = false,
     this.difficulty,
     this.onTap,
+    this.onLongPress,
   });
 
   @override
@@ -38,6 +40,7 @@ class SequenceTimerTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GestureDetector(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(

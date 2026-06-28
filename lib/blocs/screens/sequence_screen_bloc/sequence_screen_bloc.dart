@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:sportimer/blocs/screens/list_screen_bloc/list_screen_bloc.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
 import 'package:sportimer/models/timer_sequence/sequence.dart';
 import 'package:sportimer/widgets/timer_popup.dart';
@@ -13,17 +14,20 @@ class SequenceScreenBloc
     extends Bloc<SequenceScreenEvent, SequenceScreenState> {
   final Box<Sequence> sequenceBox;
   final Box<TimerItem> timerBox;
+  final ListScreenBloc listScreenBloc;
 
   late Sequence currentSequence;
 
   SequenceScreenBloc({
     required this.sequenceBox,
     required this.timerBox,
+    required this.listScreenBloc,
   }) : super(SequenceScreenInitial()) {
     on<SequenceScreenShownEvent>(_mapScreenShownToState);
     on<SequenceScreenTitleChangeEvent>(_mapScreenTitleChangedToState);
     on<SequenceScreenTimerAddEvent>(_mapScreenTimerAddedToState);
     on<SequenceScreenTimerChangeEvent>(_mapScreenTimerChangedToState);
+    on<SequenceScreenTimerDeleteEvent>(_mapScreenTimerDeletedToState);
   }
 
   Future<void> _mapScreenShownToState(
@@ -41,11 +45,12 @@ class SequenceScreenBloc
     Emitter<SequenceScreenState> emit,
   ) async {
     currentSequence = currentSequence.copyWith(event.title);
-    sequenceBox.put(currentSequence.id, currentSequence);
+    await sequenceBox.put(currentSequence.id, currentSequence);
 
     final list = getActualTimers();
 
     emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    listScreenBloc.add(ListScreenUpdateEvent());
   }
 
   Future<void> _mapScreenTimerAddedToState(
@@ -59,9 +64,10 @@ class SequenceScreenBloc
             data.seconds, list.length + 1, currentSequence.id)
         : TimerItem.createTraining(
             data.seconds, list.length + 1, currentSequence.id, data.difficulty);
-    timerBox.put(timer.id, timer);
+    await timerBox.put(timer.id, timer);
     list = getActualTimers();
     emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    listScreenBloc.add(ListScreenUpdateEvent());
   }
 
   Future<void> _mapScreenTimerChangedToState(
@@ -79,6 +85,17 @@ class SequenceScreenBloc
     await timerBox.put(updated.id, updated);
     final list = getActualTimers();
     emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    listScreenBloc.add(ListScreenUpdateEvent());
+  }
+
+  Future<void> _mapScreenTimerDeletedToState(
+    SequenceScreenTimerDeleteEvent event,
+    Emitter<SequenceScreenState> emit,
+  ) async {
+    await timerBox.delete(event.timer.id);
+    final list = getActualTimers();
+    emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    listScreenBloc.add(ListScreenUpdateEvent());
   }
 
   List<TimerItem> getActualTimers() => timerBox.values

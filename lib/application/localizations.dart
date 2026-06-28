@@ -76,6 +76,9 @@ class AppLocalizations {
       Intl.message('Однопроходный', name: 'singlePassBadge');
   String get loadingTagline =>
       Intl.message('Создай свой таймер', name: 'loadingTagline');
+  String get btnDelete => Intl.message('Удалить', name: 'btnDelete');
+  String get deleteTimerTitle =>
+      Intl.message('Удалить текущий таймер', name: 'deleteTimerTitle');
 
   String intervalsCountLabel(int count) => Intl.message(
         '$count интервалов',

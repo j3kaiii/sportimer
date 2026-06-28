@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-06-28T09:08:59.896488",
+  "@@last_modified": "2026-06-28T21:19:06.283915",
   "applicationName": "Спортаймер",
   "@applicationName": {
     "type": "text",
@@ -158,6 +158,16 @@
   },
   "loadingTagline": "Создай свой таймер",
   "@loadingTagline": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnDelete": "Удалить",
+  "@btnDelete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteTimerTitle": "Удалить текущий таймер",
+  "@deleteTimerTitle": {
     "type": "text",
     "placeholders": {}
   },

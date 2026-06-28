@@ -31,6 +31,8 @@
   <string name="cyclicBadge">Цикличный</string>
   <string name="singlePassBadge">Однопроходный</string>
   <string name="loadingTagline">Создай свой таймер</string>
+  <string name="btnDelete">Удалить</string>
+  <string name="deleteTimerTitle">Удалить текущий таймер</string>
   <string name="intervalsCountLabel">{count} интервалов</string>
   <string name="_difficultyLight">Легкая</string>
   <string name="_difficultyMedium">Средняя</string>

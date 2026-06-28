@@ -41,3 +41,12 @@ class SequenceScreenTimerChangeEvent extends SequenceScreenEvent {
   @override
   List<Object> get props => [data];
 }
+
+class SequenceScreenTimerDeleteEvent extends SequenceScreenEvent {
+  final TimerItem timer;
+
+  const SequenceScreenTimerDeleteEvent(this.timer);
+
+  @override
+  List<Object> get props => [timer];
+}

@@ -3,6 +3,7 @@
   <string name="applicationName">Sportimer</string>
   <string name="btnAdd">Add</string>
   <string name="btnCancel">Cancel</string>
+  <string name="btnDelete">Delete</string>
   <string name="btnOk">OK</string>
   <string name="btnStart">Start</string>
   <string name="btnPause">Pause</string>
@@ -16,6 +17,7 @@
   <string name="orderedName">Sequence {index}</string>
   <string name="timerByOrder">Timer {current} of {total}</string>
   <string name="completedMsg">Completed!</string>
+  <string name="deleteTimerTitle">Delete current timer</string>
   <string name="isRestTitle">Relax</string>
   <string name="isTrainingTitle">Workout</string>
   <string name="addTimer">Add timer</string>

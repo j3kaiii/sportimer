@@ -25,6 +25,7 @@ class SequenceScreen extends StatelessWidget {
       create: (context) => SequenceScreenBloc(
         sequenceBox: context.sequenceBox,
         timerBox: context.timersBox,
+        listScreenBloc: context.read<ListScreenBloc>(),
       )..add(SequenceScreenShownEvent(sequence)),
       child: _buildContent(context),
     );
@@ -121,6 +122,7 @@ class SequenceScreen extends StatelessWidget {
                 isRest: t.isRest,
                 difficulty: t.isRest ? null : loc.difficultyLabel(t.difficulty),
                 onTap: () => _showEditTimerPopup(context, t),
+                onLongPress: () => _showDeleteTimerDialog(context, t),
               );
             },
           );
@@ -253,7 +255,6 @@ class SequenceScreen extends StatelessWidget {
     if (result == null) return;
 
     context.read<SequenceScreenBloc>().add(SequenceScreenTimerAddEvent(result));
-    context.read<ListScreenBloc>().add(ListScreenUpdateEvent());
   }
 
   Future<void> _showEditTimerPopup(
@@ -279,10 +280,35 @@ class SequenceScreen extends StatelessWidget {
           isRest: res.isRest,
         ),
       ));
-      if (context.mounted) {
-        context.read<ListScreenBloc>().add(ListScreenUpdateEvent());
-      }
     }
+  }
+
+  Future<void> _showDeleteTimerDialog(
+    BuildContext context,
+    TimerItem timer,
+  ) async {
+    final loc = context.loc;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(loc.deleteTimerTitle),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(loc.btnCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(loc.btnDelete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    if (!context.mounted) return;
+    context
+        .read<SequenceScreenBloc>()
+        .add(SequenceScreenTimerDeleteEvent(timer));
   }
 
   Future<void> _showEditTitlePopup(BuildContext context) async {
@@ -299,9 +325,6 @@ class SequenceScreen extends StatelessWidget {
     );
     if (res != null) {
       bloc.add(SequenceScreenTitleChangeEvent(res));
-      if (context.mounted) {
-        context.read<ListScreenBloc>().add(ListScreenUpdateEvent());
-      }
     }
   }
 }

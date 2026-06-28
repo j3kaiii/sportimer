@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-06-28T09:11:43.344412",
+  "@@last_modified": "2026-06-28T21:21:25.480549",
   "applicationName": "Sportimer",
   "@applicationName": {
     "type": "text",
@@ -13,6 +13,11 @@
   },
   "btnCancel": "Cancel",
   "@btnCancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "btnDelete": "Delete",
+  "@btnDelete": {
     "type": "text",
     "placeholders": {}
   },
@@ -83,6 +88,11 @@
   },
   "completedMsg": "Completed!",
   "@completedMsg": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deleteTimerTitle": "Delete current timer",
+  "@deleteTimerTitle": {
     "type": "text",
     "placeholders": {}
   },
