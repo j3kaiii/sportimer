@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:sportimer/application/theme.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
 import 'package:sportimer/utils/context_extension.dart';
+import 'package:sportimer/widgets/rest_toggle.dart';
 
 class EditTimerPopup extends StatefulWidget {
   final int initialSeconds;
+  final bool initialIsRest;
 
-  const EditTimerPopup({super.key, required this.initialSeconds});
+  const EditTimerPopup({
+    super.key,
+    required this.initialSeconds,
+    this.initialIsRest = false,
+  });
 
   @override
   State<EditTimerPopup> createState() => _EditTimerPopupState();
@@ -15,16 +21,22 @@ class EditTimerPopup extends StatefulWidget {
 class _EditTimerPopupState extends State<EditTimerPopup> {
   late int _minutes;
   late int _seconds;
+  late bool _isRest;
 
   @override
   void initState() {
     super.initState();
     _minutes = widget.initialSeconds ~/ 60;
     _seconds = widget.initialSeconds % 60;
+    _isRest = widget.initialIsRest;
   }
 
   void _save() {
-    Navigator.of(context).pop(TimerData(min: _minutes, sec: _seconds));
+    Navigator.of(context).pop(TimerData(
+      min: _minutes,
+      sec: _seconds,
+      isRest: _isRest,
+    ));
   }
 
   @override
@@ -43,13 +55,18 @@ class _EditTimerPopupState extends State<EditTimerPopup> {
             children: [
               _buildTimeColumn(
                 value: _minutes,
-                label: 'Мин',
+                label: loc.minutesLabel,
                 theme: theme,
                 onIncrement: () => setState(() {
                   if (_minutes < 99) _minutes++;
                 }),
                 onDecrement: () => setState(() {
-                  if (_minutes > 0) _minutes--;
+                  if (_minutes > 0) {
+                    _minutes--;
+                    if (_minutes == 0 && _seconds == 0) {
+                      _seconds = 10;
+                    }
+                  }
                 }),
               ),
               Padding(
@@ -58,8 +75,9 @@ class _EditTimerPopupState extends State<EditTimerPopup> {
               ),
               _buildTimeColumn(
                 value: _seconds,
-                label: 'Сек',
+                label: loc.secondsLabel,
                 theme: theme,
+                disableDecrement: _minutes == 0 && _seconds == 10,
                 onIncrement: () => setState(() {
                   if (_seconds < 59) {
                     _seconds++;
@@ -68,6 +86,7 @@ class _EditTimerPopupState extends State<EditTimerPopup> {
                   }
                 }),
                 onDecrement: () => setState(() {
+                  if (_minutes == 0 && _seconds <= 10) return;
                   if (_seconds > 0) {
                     _seconds--;
                   } else {
@@ -84,6 +103,13 @@ class _EditTimerPopupState extends State<EditTimerPopup> {
               fontSize: 24,
               color: theme.activeItemColor,
             ),
+          ),
+          const SizedBox(height: 16),
+          RestToggle(
+            value: _isRest,
+            onChanged: (v) => setState(() => _isRest = v),
+            theme: theme,
+            padding: const EdgeInsets.symmetric(vertical: 8),
           ),
         ],
       ),
@@ -110,6 +136,7 @@ class _EditTimerPopupState extends State<EditTimerPopup> {
     required SportimerThemeData theme,
     required VoidCallback onIncrement,
     required VoidCallback onDecrement,
+    bool disableDecrement = false,
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -134,8 +161,11 @@ class _EditTimerPopupState extends State<EditTimerPopup> {
         ),
         const SizedBox(height: 4),
         GestureDetector(
-          onTap: onDecrement,
-          child: Icon(Icons.keyboard_arrow_down, color: theme.textMuted),
+          onTap: disableDecrement ? null : onDecrement,
+          child: Icon(Icons.keyboard_arrow_down,
+              color: disableDecrement
+                  ? theme.textMuted.withValues(alpha: 0.3)
+                  : theme.textMuted),
         ),
         const SizedBox(height: 2),
         Text(label, style: theme.popupTimeLabelStyle),

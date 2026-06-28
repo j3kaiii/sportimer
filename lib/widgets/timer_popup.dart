@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportimer/application/theme.dart';
 import 'package:sportimer/models/timer_item/timer_item.dart';
 import 'package:sportimer/utils/context_extension.dart';
+import 'package:sportimer/widgets/rest_toggle.dart';
 
 class TimerPopup extends StatefulWidget {
   const TimerPopup({super.key});
@@ -23,8 +24,8 @@ class TimerPopup extends StatefulWidget {
 }
 
 class _TimerPopupState extends State<TimerPopup> {
-  int _minutes = 2;
-  int _seconds = 0;
+  int _minutes = 0;
+  int _seconds = 10;
   bool _isRest = false;
   Difficulty _difficulty = Difficulty.medium;
 
@@ -39,6 +40,7 @@ class _TimerPopupState extends State<TimerPopup> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final loc = context.loc;
     final mediaQuery = MediaQuery.of(context);
 
     return Padding(
@@ -58,11 +60,16 @@ class _TimerPopupState extends State<TimerPopup> {
             ),
           ),
           const SizedBox(height: 20),
-          Text('Новый таймер', style: theme.popupTitleStyle),
+          Text(loc.newTimerTitle, style: theme.popupTitleStyle),
           const SizedBox(height: 24),
           _buildTimePicker(theme),
           const SizedBox(height: 24),
-          _buildRestToggle(theme),
+          RestToggle(
+            value: _isRest,
+            onChanged: (v) => setState(() => _isRest = v),
+            theme: theme,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+          ),
           const SizedBox(height: 20),
           _buildDifficultySection(theme),
           const SizedBox(height: 20),
@@ -74,18 +81,24 @@ class _TimerPopupState extends State<TimerPopup> {
   }
 
   Widget _buildTimePicker(SportimerThemeData theme) {
+    final loc = context.loc;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _TimeColumn(
           value: _minutes,
-          label: 'Мин',
+          label: loc.minutesLabel,
           theme: theme,
           onIncrement: () => setState(() {
             if (_minutes < 99) _minutes++;
           }),
           onDecrement: () => setState(() {
-            if (_minutes > 0) _minutes--;
+            if (_minutes > 0) {
+              _minutes--;
+              if (_minutes == 0 && _seconds == 0) {
+                _seconds = 10;
+              }
+            }
           }),
         ),
         Padding(
@@ -94,8 +107,9 @@ class _TimerPopupState extends State<TimerPopup> {
         ),
         _TimeColumn(
           value: _seconds,
-          label: 'Сек',
+          label: loc.secondsLabel,
           theme: theme,
+          disableDecrement: _minutes == 0 && _seconds == 10,
           onIncrement: () => setState(() {
             if (_seconds < 59) {
               _seconds++;
@@ -104,6 +118,7 @@ class _TimerPopupState extends State<TimerPopup> {
             }
           }),
           onDecrement: () => setState(() {
+            if (_minutes == 0 && _seconds <= 10) return;
             if (_seconds > 0) {
               _seconds--;
             } else {
@@ -115,67 +130,14 @@ class _TimerPopupState extends State<TimerPopup> {
     );
   }
 
-  Widget _buildRestToggle(SportimerThemeData theme) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: theme.borderColor.withValues(alpha: 0.5)),
-          bottom: BorderSide(color: theme.borderColor.withValues(alpha: 0.5)),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Отдых', style: theme.popupToggleTitleStyle),
-              const SizedBox(height: 2),
-              Text(
-                'Переключить на интервал отдыха',
-                style: theme.popupToggleHintStyle,
-              ),
-            ],
-          ),
-          GestureDetector(
-            onTap: () => setState(() => _isRest = !_isRest),
-            child: Container(
-              width: 52,
-              height: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: _isRest ? theme.accentRest : theme.borderColor,
-              ),
-              child: AnimatedAlign(
-                duration: const Duration(milliseconds: 200),
-                alignment:
-                    _isRest ? Alignment.centerRight : Alignment.centerLeft,
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  margin: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildDifficultySection(SportimerThemeData theme) {
+    final loc = context.loc;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Сложность', style: theme.popupSectionTitleStyle),
+          Text(loc.difficultyTitle, style: theme.popupSectionTitleStyle),
           const SizedBox(height: 10),
           Row(
             children: Difficulty.values.map((d) {
@@ -199,7 +161,7 @@ class _TimerPopupState extends State<TimerPopup> {
                       ),
                     ),
                     child: Text(
-                      d.name,
+                      loc.difficultyLabel(d),
                       style: theme.popupChipTextStyle.copyWith(
                         color: active
                             ? theme.activeItemColor
@@ -217,6 +179,7 @@ class _TimerPopupState extends State<TimerPopup> {
   }
 
   Widget _buildSaveButton(SportimerThemeData theme) {
+    final loc = context.loc;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
@@ -236,7 +199,7 @@ class _TimerPopupState extends State<TimerPopup> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text('Сохранить', style: theme.popupSaveTextStyle),
+            child: Text(loc.btnSave, style: theme.popupSaveTextStyle),
           ),
         ),
       ),
@@ -250,6 +213,7 @@ class _TimeColumn extends StatelessWidget {
   final SportimerThemeData theme;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final bool disableDecrement;
 
   const _TimeColumn({
     required this.value,
@@ -257,6 +221,7 @@ class _TimeColumn extends StatelessWidget {
     required this.theme,
     required this.onIncrement,
     required this.onDecrement,
+    this.disableDecrement = false,
   });
 
   @override
@@ -296,7 +261,7 @@ class _TimeColumn extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         GestureDetector(
-          onTap: onDecrement,
+          onTap: disableDecrement ? null : onDecrement,
           child: Container(
             width: 32,
             height: 24,
@@ -304,7 +269,9 @@ class _TimeColumn extends StatelessWidget {
             child: Icon(
               Icons.keyboard_arrow_down,
               size: 20,
-              color: theme.textMuted,
+              color: disableDecrement
+                  ? theme.textMuted.withValues(alpha: 0.3)
+                  : theme.textMuted,
             ),
           ),
         ),
