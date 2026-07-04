@@ -27,13 +27,12 @@ class _TimerPopupState extends State<TimerPopup> {
   int _minutes = 0;
   int _seconds = 10;
   bool _isRest = false;
-  Difficulty _difficulty = Difficulty.medium;
-
   void _save() {
     Navigator.of(context).pop(TimerAddResult(
       seconds: _minutes * 60 + _seconds,
       isRest: _isRest,
-      difficulty: _difficulty,
+      // TODO: always medium until difficulty feature is scoped
+      difficulty: Difficulty.medium,
     ));
   }
 
@@ -71,7 +70,7 @@ class _TimerPopupState extends State<TimerPopup> {
             margin: const EdgeInsets.symmetric(horizontal: 20),
           ),
           const SizedBox(height: 20),
-          _buildDifficultySection(theme),
+          // TODO: _buildDifficultySection(theme),
           const SizedBox(height: 20),
           _buildSaveButton(theme),
           const SizedBox(height: 28),
@@ -130,53 +129,54 @@ class _TimerPopupState extends State<TimerPopup> {
     );
   }
 
-  Widget _buildDifficultySection(SportimerThemeData theme) {
-    final loc = context.loc;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(loc.difficultyTitle, style: theme.popupSectionTitleStyle),
-          const SizedBox(height: 10),
-          Row(
-            children: Difficulty.values.map((d) {
-              final active = d == _difficulty;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: GestureDetector(
-                  onTap: () => setState(() => _difficulty = d),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color:
-                          active ? theme.accentWorkoutSoft : Colors.transparent,
-                      border: Border.all(
-                        color:
-                            active ? theme.activeItemColor : theme.borderColor,
-                      ),
-                    ),
-                    child: Text(
-                      loc.difficultyLabel(d),
-                      style: theme.popupChipTextStyle.copyWith(
-                        color: active
-                            ? theme.activeItemColor
-                            : theme.textSecondary,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
+// TODO: difficulty section — закомментировано до проработки механики сложности
+//   Widget _buildDifficultySection(SportimerThemeData theme) {
+//     final loc = context.loc;
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 20),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(loc.difficultyTitle, style: theme.popupSectionTitleStyle),
+//           const SizedBox(height: 10),
+//           Row(
+//             children: Difficulty.values.map((d) {
+//               final active = d == _difficulty;
+//               return Padding(
+//                 padding: const EdgeInsets.only(right: 8),
+//                 child: GestureDetector(
+//                   onTap: () => setState(() => _difficulty = d),
+//                   child: Container(
+//                     padding: const EdgeInsets.symmetric(
+//                       horizontal: 14,
+//                       vertical: 6,
+//                     ),
+//                     decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(8),
+//                       color:
+//                           active ? theme.accentWorkoutSoft : Colors.transparent,
+//                       border: Border.all(
+//                         color:
+//                             active ? theme.activeItemColor : theme.borderColor,
+//                       ),
+//                     ),
+//                     child: Text(
+//                       loc.difficultyLabel(d),
+//                       style: theme.popupChipTextStyle.copyWith(
+//                         color: active
+//                             ? theme.activeItemColor
+//                             : theme.textSecondary,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               );
+//             }).toList(),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
 
   Widget _buildSaveButton(SportimerThemeData theme) {
     final loc = context.loc;

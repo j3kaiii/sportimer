@@ -4,7 +4,7 @@ import 'package:sportimer/utils/context_extension.dart';
 class SequenceTimerTile extends StatelessWidget {
   final int seconds;
   final bool isRest;
-  final String? difficulty;
+  // TODO: final String? difficulty;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
@@ -12,7 +12,7 @@ class SequenceTimerTile extends StatelessWidget {
     super.key,
     required this.seconds,
     this.isRest = false,
-    this.difficulty,
+    // TODO: this.difficulty,
     this.onTap,
     this.onLongPress,
   });
@@ -79,13 +79,14 @@ class SequenceTimerTile extends StatelessWidget {
                         color: theme.textPrimary,
                       ),
                     ),
-                    if (difficulty != null && !isRest) ...[
-                      const SizedBox(height: 2),
-                      Text(
-                        difficulty!,
-                        style: theme.timerDifficultyStyle,
-                      ),
-                    ],
+                    // TODO: отображение сложности — закомментировано до проработки
+                    // if (difficulty != null && !isRest) ...[
+                    //   const SizedBox(height: 2),
+                    //   Text(
+                    //     difficulty!,
+                    //     style: theme.timerDifficultyStyle,
+                    //   ),
+                    // ],
                   ],
                 ),
               ),

@@ -118,7 +118,7 @@ class TimerData {
   int get toSeconds => min * _secondsPerMin + sec;
 }
 
-/// Типы единиц измерения для продуктов
+/// Уровень сложности таймера
 enum Difficulty {
   light,
   medium,

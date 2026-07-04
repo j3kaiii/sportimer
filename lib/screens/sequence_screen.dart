@@ -116,11 +116,10 @@ class SequenceScreen extends StatelessWidget {
                 return addTimerButton;
               }
               final t = timers[index];
-              final loc = context.loc;
               return SequenceTimerTile(
                 seconds: t.seconds,
                 isRest: t.isRest,
-                difficulty: t.isRest ? null : loc.difficultyLabel(t.difficulty),
+                // TODO: difficulty: t.isRest ? null : loc.difficultyLabel(t.difficulty),
                 onTap: () => _showEditTimerPopup(context, t),
                 onLongPress: () => _showDeleteTimerDialog(context, t),
               );
