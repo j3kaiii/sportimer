@@ -11,13 +11,6 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme;
     final loc = context.loc;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        if (context.mounted) {
-          context.goNamed(root);
-        }
-      });
-    });
     return Material(
       child: GestureDetector(
         onTap: () => context.goNamed(root),
@@ -38,8 +31,6 @@ class LoadingScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _LogoWidget(),
-                const SizedBox(height: 24),
                 ShaderMask(
                   shaderCallback: (bounds) => const LinearGradient(
                     colors: [
@@ -53,12 +44,14 @@ class LoadingScreen extends StatelessWidget {
                     style: theme.loadingTitleStyle,
                   ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 40),
+                Image.asset('assets/images/app_icon.png'),
+                const SizedBox(height: 30),
                 Text(
                   loc.loadingTagline,
                   style: theme.taglineStyle,
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 10),
                 const _LoadingDots(),
               ],
             ),
@@ -67,73 +60,6 @@ class LoadingScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class _LogoWidget extends StatelessWidget {
-  const _LogoWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 88,
-      height: 88,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        gradient: SportimerThemeData.workoutGradient,
-        boxShadow: [
-          BoxShadow(
-            color: SportimerThemeData.kAccentWorkout.withValues(alpha: 0.3),
-            blurRadius: 32,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: const Center(
-        child: SizedBox(
-          width: 48,
-          height: 48,
-          child: CustomPaint(
-            painter: _TimerIconPainter(),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TimerIconPainter extends CustomPainter {
-  const _TimerIconPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    paint.strokeWidth = 3.0;
-    canvas.drawCircle(const Offset(24, 24), 18, paint);
-
-    paint.strokeWidth = 2.5;
-    canvas.drawLine(
-      const Offset(24, 24),
-      const Offset(24, 12),
-      paint,
-    );
-
-    paint.strokeWidth = 2.0;
-    canvas.drawLine(
-      const Offset(24, 24),
-      const Offset(34, 24),
-      paint,
-    );
-
-    paint.style = PaintingStyle.fill;
-    canvas.drawCircle(const Offset(24, 24), 2.5, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _LoadingDots extends StatefulWidget {
@@ -152,18 +78,21 @@ class _LoadingDotsState extends State<_LoadingDots>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1400),
-    )..repeat();
+      duration: const Duration(seconds: 2),
+    );
+    _controller.addStatusListener(_onAnimStatusChanged);
   }
 
   @override
   void dispose() {
+    _controller.removeStatusListener(_onAnimStatusChanged);
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.forward());
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
@@ -208,5 +137,12 @@ class _LoadingDotsState extends State<_LoadingDots>
         );
       },
     );
+  }
+
+   void _onAnimStatusChanged(AnimationStatus s) {
+    print('testdata status $s');
+    if (s == AnimationStatus.completed && context.mounted) {
+      context.goNamed(root);
+    }
   }
 }

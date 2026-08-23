@@ -26,6 +26,7 @@ dependencies:
   equatable: ^2.0.8
   bloc: ^9.2.1
   collection: ^1.19.1
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +40,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/timer.png
+    - assets/images/app_icon.png
     - assets/sounds/
   # fonts:
   #   - family: Schyler
