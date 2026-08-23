@@ -1,4 +1,4 @@
-# sportimer
+# Sportimer
 
 Customizable interval timer for workout and training routines.
 
@@ -13,13 +13,13 @@ Create named **sequences** (workout sets), populate them with training/rest inte
 - **Playback controls** — play/pause, reset, stop
 - **Dark-only theme** — slate-based palette with red (workout) / green (rest) accents
 - **Localization** — Russian (base) and English
-- **Persistence** — all data saved locally via Hive
+- **Persistence** — all data saved locally
 
 ## Tech Stack
 
-- Flutter 3.38.10 (pinned via FVM) |
-- State - `flutter_bloc` + `equatable` |
-- Navigation - `go_router` |
+- Flutter 3.38.10 (pinned via FVM)
+- State - `flutter_bloc` + `equatable`
+- Navigation - `go_router`
 - Persistence - Hive
 
 ## Getting Started
