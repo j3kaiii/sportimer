@@ -31,6 +31,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
   bool _soundsLoaded = false;
   final ValueNotifier<int> _minutes = ValueNotifier<int>(0);
   final ValueNotifier<int> _seconds = ValueNotifier<int>(0);
+  final ValueNotifier<int> _currentCycle = ValueNotifier<int>(1);
   int _totalSeconds = 0;
 
   TimerData? _pausedData;
@@ -69,6 +70,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     _minutes.dispose();
     _seconds.dispose();
     _currentTimerIndex.dispose();
+    _currentCycle.dispose();
     _isRunning.dispose();
     _isCompleted.dispose();
     super.dispose();
@@ -124,9 +126,20 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
             valueListenable: _currentTimerIndex,
             builder: (ctx, idx, _) => Text(
               context.loc.timerByOrder(idx + 1, _timers.length),
-              style: t.runningTimerInfoStyle,
+              style: t.runningTimerInfoStyle.copyWith(fontSize: 15),
             ),
           ),
+          if (widget.sequence.repeats > 1)
+            ValueListenableBuilder<int>(
+              valueListenable: _currentCycle,
+              builder: (ctx, cycle, _) => Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Text(
+                  context.loc.cycleLabel(cycle, widget.sequence.repeats),
+                  style: t.runningTimerInfoStyle,
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -226,8 +239,11 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 36),
       height: 172,
       child: ListenableBuilder(
-        listenable:
-            Listenable.merge([_currentTimerIndex, _isCompleted, _isRunning]),
+        listenable: Listenable.merge([
+          _currentTimerIndex,
+          _isCompleted,
+          _isRunning,
+        ]),
         builder: (ctx, _) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -430,8 +446,19 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
   }
 
   void _completeSequence() {
-    _isRunning.value = false;
-    _isCompleted.value = true;
+    if (widget.sequence.repeats > 1 &&
+        _currentCycle.value < widget.sequence.repeats) {
+      _currentCycle.value++;
+      _currentTimerIndex.value = 0;
+      _minutes.value = 0;
+      _seconds.value = 0;
+      _totalSeconds = 0;
+      _pausedData = null;
+      _startCurrentTimer();
+    } else {
+      _isRunning.value = false;
+      _isCompleted.value = true;
+    }
   }
 
   void _pauseSequence() {
@@ -450,6 +477,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
   void _resetSequence() {
     _currentTimer?.cancel();
     _currentTimerIndex.value = 0;
+    _currentCycle.value = 1;
     _isRunning.value = false;
     _isCompleted.value = false;
     _pausedData = null;
@@ -463,6 +491,7 @@ class _RunningSequenceScreenState extends State<RuningSequenceScreen> {
     _isCompleted.value = false;
     _pausedData = null;
     _currentTimerIndex.value = 0;
+    _currentCycle.value = 1;
     _minutes.value = 0;
     _seconds.value = 0;
   }

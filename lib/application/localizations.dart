@@ -79,6 +79,13 @@ class AppLocalizations {
   String get btnDelete => Intl.message('Удалить', name: 'btnDelete');
   String get deleteTimerTitle =>
       Intl.message('Удалить текущий таймер', name: 'deleteTimerTitle');
+  String get repeatsLabel =>
+      Intl.message('Циклов:', name: 'repeatsLabel');
+  String cycleLabel(int current, int total) => Intl.message(
+        'Цикл $current из $total',
+        name: 'cycleLabel',
+        args: [current, total],
+      );
 
   String intervalsCountLabel(int count) => Intl.message(
         '$count интервалов',

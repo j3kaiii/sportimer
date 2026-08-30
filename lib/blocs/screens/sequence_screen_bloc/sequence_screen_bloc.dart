@@ -28,6 +28,7 @@ class SequenceScreenBloc
     on<SequenceScreenTimerAddEvent>(_mapScreenTimerAddedToState);
     on<SequenceScreenTimerChangeEvent>(_mapScreenTimerChangedToState);
     on<SequenceScreenTimerDeleteEvent>(_mapScreenTimerDeletedToState);
+    on<SequenceScreenRepeatsChangeEvent>(_mapScreenRepeatsChangedToState);
   }
 
   Future<void> _mapScreenShownToState(
@@ -37,19 +38,21 @@ class SequenceScreenBloc
     currentSequence = event.sequence;
     final list = getActualTimers();
 
-    emit(SequenceScreenLoadSuccess(event.sequence.name, list));
+    emit(SequenceScreenLoadSuccess(event.sequence.name, list,
+        repeats: currentSequence.repeats));
   }
 
   Future<void> _mapScreenTitleChangedToState(
     SequenceScreenTitleChangeEvent event,
     Emitter<SequenceScreenState> emit,
   ) async {
-    currentSequence = currentSequence.copyWith(event.title);
+    currentSequence = currentSequence.copyWith(name: event.title);
     await sequenceBox.put(currentSequence.id, currentSequence);
 
     final list = getActualTimers();
 
-    emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    emit(SequenceScreenLoadSuccess(currentSequence.name, list,
+        repeats: currentSequence.repeats));
     listScreenBloc.add(ListScreenUpdateEvent());
   }
 
@@ -66,7 +69,8 @@ class SequenceScreenBloc
             data.seconds, list.length + 1, currentSequence.id, data.difficulty);
     await timerBox.put(timer.id, timer);
     list = getActualTimers();
-    emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    emit(SequenceScreenLoadSuccess(currentSequence.name, list,
+        repeats: currentSequence.repeats));
     listScreenBloc.add(ListScreenUpdateEvent());
   }
 
@@ -94,7 +98,21 @@ class SequenceScreenBloc
   ) async {
     await timerBox.delete(event.timer.id);
     final list = getActualTimers();
-    emit(SequenceScreenLoadSuccess(currentSequence.name, list));
+    emit(SequenceScreenLoadSuccess(currentSequence.name, list,
+        repeats: currentSequence.repeats));
+    listScreenBloc.add(ListScreenUpdateEvent());
+  }
+
+  Future<void> _mapScreenRepeatsChangedToState(
+    SequenceScreenRepeatsChangeEvent event,
+    Emitter<SequenceScreenState> emit,
+  ) async {
+    currentSequence = currentSequence.copyWith(repeats: event.repeats);
+    await sequenceBox.put(currentSequence.id, currentSequence);
+
+    final list = getActualTimers();
+    emit(SequenceScreenLoadSuccess(currentSequence.name, list,
+        repeats: currentSequence.repeats));
     listScreenBloc.add(ListScreenUpdateEvent());
   }
 

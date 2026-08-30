@@ -35,7 +35,7 @@ class ListScreenBloc extends Bloc<ListScreenEvent, ListScreenState> {
           intervalsCount: seqTimers.length,
           totalDuration: seqTimers.fold(0, (v, e) => v + e.seconds),
           hasRest: seqTimers.any((t) => t.isRest),
-          isCyclic: false,
+          isCyclic: s.repeats > 1,
           hasWorkout: seqTimers.any((t) => !t.isRest),
         );
       },
@@ -58,7 +58,7 @@ class ListScreenBloc extends Bloc<ListScreenEvent, ListScreenState> {
             intervalsCount: seqTimers.length,
             totalDuration: seqTimers.fold(0, (v, e) => v + e.seconds),
             hasRest: seqTimers.any((t) => t.isRest),
-            isCyclic: false,
+            isCyclic: s.repeats > 1,
             hasWorkout: seqTimers.any((t) => !t.isRest),
           );
         },
@@ -99,7 +99,7 @@ class SequenceData {
         intervalsCount: 0,
         totalDuration: 0,
         hasRest: false,
-        isCyclic: false,
+        isCyclic: sequence.repeats > 1,
         hasWorkout: false,
       );
 }

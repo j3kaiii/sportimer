@@ -40,6 +40,7 @@ class SequenceScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(context, theme),
+            _buildRepeatsControl(context, theme, loc),
             Expanded(child: _buildTimerList(context, theme, loc)),
             _buildStartButton(context, theme, loc),
           ],
@@ -94,6 +95,54 @@ class SequenceScreen extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: theme.titleTextStyle,
       ),
+    );
+  }
+
+  Widget _buildRepeatsControl(
+    BuildContext context,
+    SportimerThemeData theme,
+    AppLocalizations loc,
+  ) {
+    return BlocBuilder<SequenceScreenBloc, SequenceScreenState>(
+      builder: (context, state) {
+        if (state is! SequenceScreenLoadSuccess) {
+          return const SizedBox.shrink();
+        }
+        final repeats = state.repeats;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(loc.repeatsLabel, style: theme.cardMetaStyle),
+              const SizedBox(width: 12),
+              _RoundButton(
+                icon: Icons.remove,
+                onTap: repeats > 1
+                    ? () => context
+                        .read<SequenceScreenBloc>()
+                        .add(SequenceScreenRepeatsChangeEvent(repeats - 1))
+                    : null,
+                theme: theme,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  repeats.toString(),
+                  style: theme.cardTitleStyle,
+                ),
+              ),
+              _RoundButton(
+                icon: Icons.add,
+                onTap: () => context
+                    .read<SequenceScreenBloc>()
+                    .add(SequenceScreenRepeatsChangeEvent(repeats + 1)),
+                theme: theme,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -360,4 +409,34 @@ class _DashedBorderPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _DashedBorderPainter old) =>
       old.color != color || old.radius != radius;
+}
+
+class _RoundButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onTap;
+  final SportimerThemeData theme;
+
+  const _RoundButton({
+    required this.icon,
+    required this.onTap,
+    required this.theme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 28,
+        height: 28,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: onTap != null
+              ? theme.activeItemColor
+              : theme.textMuted.withValues(alpha: 0.3),
+        ),
+        child: Icon(icon, size: 16, color: Colors.white),
+      ),
+    );
+  }
 }

@@ -50,3 +50,12 @@ class SequenceScreenTimerDeleteEvent extends SequenceScreenEvent {
   @override
   List<Object> get props => [timer];
 }
+
+class SequenceScreenRepeatsChangeEvent extends SequenceScreenEvent {
+  final int repeats;
+
+  const SequenceScreenRepeatsChangeEvent(this.repeats);
+
+  @override
+  List<Object> get props => [repeats];
+}
