@@ -268,7 +268,7 @@ class SportimerThemeData extends CustomThemeData {
       );
 }
 
-extension _PlannerThemeDataExtension on SportimerThemeData {
+extension _SportimererThemeDataExtension on SportimerThemeData {
   ThemeData theme() => ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: primaryBgColor,

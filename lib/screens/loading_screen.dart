@@ -140,7 +140,6 @@ class _LoadingDotsState extends State<_LoadingDots>
   }
 
    void _onAnimStatusChanged(AnimationStatus s) {
-    print('testdata status $s');
     if (s == AnimationStatus.completed && context.mounted) {
       context.goNamed(root);
     }

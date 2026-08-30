@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_theme/flutter_custom_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -32,6 +33,9 @@ class SportimerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return CustomThemes(
       data: _themesData,
         child: _buildGlobalBlocs(context, _buildApp(context)));
