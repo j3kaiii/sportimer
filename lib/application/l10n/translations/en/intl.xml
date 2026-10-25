@@ -33,8 +33,15 @@
   <string name="cyclicBadge">Cyclic</string>
   <string name="singlePassBadge">Single pass</string>
   <string name="loadingTagline">Create your timer</string>
-  <string name="intervalsCountLabel">{count} intervals</string>
   <string name="_difficultyLight">Light</string>
   <string name="_difficultyMedium">Medium</string>
   <string name="_difficultyHard">Hard</string>
+  <string name="repeatsLabel">Sets:</string>
+  <string name="cycleLabel">Set {current} of {total}</string>
+  <plurals name="intervalsCountLabel">
+    <item quantity="one">{count} set</item>
+    <item quantity="few">{count} sets</item>
+    <item quantity="many">{count} sets</item>
+    <item quantity="other">{count} sets</item>
+  </plurals>
 </resources>

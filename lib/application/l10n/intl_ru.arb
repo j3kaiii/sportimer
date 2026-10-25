@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "@@last_modified": "2026-06-28T21:19:06.283915",
+  "@@last_modified": "2026-08-30T08:47:35.627158",
   "applicationName": "Спортаймер",
   "@applicationName": {
     "type": "text",
@@ -171,7 +171,20 @@
     "type": "text",
     "placeholders": {}
   },
-  "intervalsCountLabel": "{count} интервалов",
+  "repeatsLabel": "Циклов:",
+  "@repeatsLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cycleLabel": "Цикл {current} из {total}",
+  "@cycleLabel": {
+    "type": "text",
+    "placeholders": {
+      "current": {},
+      "total": {}
+    }
+  },
+  "intervalsCountLabel": "{count,plural, =1{{count} интервал}few{{count} интервала}many{{count} интервалов}other{{count} интервалов}}",
   "@intervalsCountLabel": {
     "type": "text",
     "placeholders": {

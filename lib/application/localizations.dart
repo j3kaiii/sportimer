@@ -87,8 +87,12 @@ class AppLocalizations {
         args: [current, total],
       );
 
-  String intervalsCountLabel(int count) => Intl.message(
-        '$count интервалов',
+  String intervalsCountLabel(int count) => Intl.plural(
+        count,
+        one: '$count интервал',
+        few: '$count интервала',
+        many: '$count интервалов',
+        other: '$count интервалов',
         name: 'intervalsCountLabel',
         args: [count],
       );

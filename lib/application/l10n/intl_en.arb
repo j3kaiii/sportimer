@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2026-06-28T21:21:25.480549",
+  "@@last_modified": "2026-08-30T08:52:38.556960",
   "applicationName": "Sportimer",
   "@applicationName": {
     "type": "text",
@@ -171,13 +171,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "intervalsCountLabel": "{count} intervals",
-  "@intervalsCountLabel": {
-    "type": "text",
-    "placeholders": {
-      "count": {}
-    }
-  },
   "_difficultyLight": "Light",
   "@_difficultyLight": {
     "type": "text",
@@ -192,5 +185,25 @@
   "@_difficultyHard": {
     "type": "text",
     "placeholders": {}
+  },
+  "repeatsLabel": "Sets:",
+  "@repeatsLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cycleLabel": "Set {current} of {total}",
+  "@cycleLabel": {
+    "type": "text",
+    "placeholders": {
+      "current": {},
+      "total": {}
+    }
+  },
+  "intervalsCountLabel": "{count,plural, =1{{count} set}few{{count} sets}many{{count} sets}other{{count} sets}}",
+  "@intervalsCountLabel": {
+    "type": "text",
+    "placeholders": {
+      "count": {}
+    }
   }
 }
